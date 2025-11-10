@@ -4,7 +4,7 @@ import (
 	"os"
 	"sync"
 
-	"github.com/cznic/kv"
+	"modernc.org/kv"
 )
 
 type kvStore struct {

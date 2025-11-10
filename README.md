@@ -23,7 +23,7 @@ Features:
   - [BoltDB](https://github.com/boltdb/bolt)
   - [buntdb](https://github.com/tidwall/buntdb)
   - [LevelDB](https://github.com/syndtr/goleveldb)
-  - [cznic/kv](https://github.com/cznic/kv)
+  - [modernc.org/kv](https://gitlab.com/cznic/kv)
   - [rocksdb](https://github.com/tecbot/gorocksdb)
   - [pebble](https://github.com/cockroachdb/pebble)
   - [pogreb](https://github.com/akrylysov/pogreb)
