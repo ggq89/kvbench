@@ -13,6 +13,19 @@ type nutsdbStore struct {
 	db *nutsdb.DB
 }
 
+var defaultSegmentSize int64 = 256 * nutsdb.MB
+
+// DefaultOptions represents the default options.
+var pptions = func() nutsdb.Options {
+	return nutsdb.Options{
+		EntryIdxMode: nutsdb.HintKeyAndRAMIdxMode,
+		SegmentSize:  defaultSegmentSize,
+		NodeNum:      1,
+		RWMode:       nutsdb.FileIO,
+		SyncEnable:   false,
+	}
+}()
+
 func nutsdbKey(key []byte) []byte {
 	r := make([]byte, len(key)+1)
 	r[0] = 'k'
@@ -21,10 +34,11 @@ func nutsdbKey(key []byte) []byte {
 }
 func NewNutsdbStore(path string, fsync bool) (Store, error) {
 	if path == ":memory:" {
-		return nil, errMemoryNotAllowed
+		return nil, ErrMemoryNotAllowed
 	}
 
-	opt := nutsdb.DefaultOptions
+	// opt := nutsdb.DefaultOptions
+	opt := pptions
 	opt.SyncEnable = fsync
 	opt.Dir = path
 

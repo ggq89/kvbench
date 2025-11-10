@@ -16,7 +16,7 @@ type kvStore struct {
 
 func NewKVStore(path string, fsync bool) (Store, error) {
 	if path == ":memory:" {
-		return nil, errMemoryNotAllowed
+		return nil, ErrMemoryNotAllowed
 	}
 	db, err := kv.Create(path, &kv.Options{})
 	if err != nil {

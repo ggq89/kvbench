@@ -21,7 +21,7 @@ func pogrebKey(key []byte) []byte {
 }
 func NewPogrebStore(path string, fsync bool) (Store, error) {
 	if path == ":memory:" {
-		return nil, errMemoryNotAllowed
+		return nil, ErrMemoryNotAllowed
 	}
 
 	opts := &pogreb.Options{}
@@ -89,7 +89,7 @@ func (s *pogrebStore) Del(key []byte) (bool, error) {
 }
 
 func (s *pogrebStore) Keys(pattern []byte, limit int, withvalues bool) ([][]byte, [][]byte, error) {
-	return nil, nil, errMemoryNotAllowed
+	return nil, nil, ErrNotSupported
 }
 
 func (s *pogrebStore) FlushDB() error {

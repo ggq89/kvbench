@@ -2,7 +2,8 @@
 
 SIZE=256
 
-STORES=("badger" "bbolt" "bolt" "leveldb" "kv" "buntdb" "pebble" "pogreb" "nutsdb" "rocksdb" "btree" "btree/memory" "map" "map/memory")
+# STORES=("badger" "bbolt" "bolt" "leveldb" "kv" "buntdb" "pebble" "pogreb" "nutsdb" "rocksdb" "btree" "btree/memory" "map" "map/memory")
+STORES=("nutsdb" "badger" "bbolt" "bolt" "leveldb" "buntdb" "pebble" "pogreb" "rocksdb" "btree" "btree/memory" "map" "map/memory" "kv")
 
 export LD_LIBRARY_PATH=/usr/local/lib
 
@@ -16,7 +17,9 @@ export LD_LIBRARY_PATH=/usr/local/lib
 echo "=========== test nofsync ==========="
 for i in "${STORES[@]}"
 do
-	./main -d 1m -size ${SIZE} -s "$i" >> benchmarks/test.log 2>&1
+#	./main -d 1m -size ${SIZE} -s "$i" >> benchmarks/test.log 2>&1
+  echo "$i"
+	./cli -d 10s -size ${SIZE} -s "$i" -save "benchmarks/nofsync.csv" >> benchmarks/test.log 2>&1
 done
 
 `rm  -fr .*db`
@@ -28,7 +31,8 @@ echo "=========== test fsync ==========="
 
 for i in "${STORES[@]}"
 do
-	./main -d 1m -size ${SIZE} -s "$i" -fsync >> benchmarks/test.log 2>&1
+#   ./main -d 1m -size ${SIZE} -s "$i" -fsync >> benchmarks/test.log 2>&1
+	./cli -d 10s -size ${SIZE} -s "$i" -save "benchmarks/fsync.csv" -fsync >> benchmarks/test.log 2>&1
 done
 
 `rm  -fr .*db` 

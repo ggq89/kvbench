@@ -11,7 +11,8 @@ import (
 	"github.com/tidwall/redlog"
 )
 
-var errMemoryNotAllowed = errors.New(":memory: path not available")
+var ErrMemoryNotAllowed = errors.New(":memory: path not available")
+var ErrNotSupported = errors.New("not supported")
 var log = redlog.New(os.Stderr, nil)
 
 type Options struct {

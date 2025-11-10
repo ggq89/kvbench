@@ -23,7 +23,7 @@ func boltKey(key []byte) []byte {
 }
 func NewBoltStore(path string, fsync bool) (Store, error) {
 	if path == ":memory:" {
-		return nil, errMemoryNotAllowed
+		return nil, ErrMemoryNotAllowed
 	}
 	db, err := bolt.Open(path, 0666, nil)
 	if err != nil {

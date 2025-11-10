@@ -23,6 +23,7 @@ func NewBadgerStore(path string, fsync bool) (Store, error) {
 	if path == ":memory:" {
 		opts.InMemory = true
 	}
+	opts.Logger = nil
 
 	opts.SyncWrites = fsync
 	db, err := badger.Open(opts)

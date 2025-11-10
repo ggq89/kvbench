@@ -23,7 +23,7 @@ func rocksdbKey(key []byte) []byte {
 
 func NewRocksdbStore(path string, fsync bool) (Store, error) {
 	if path == ":memory:" {
-		return nil, errMemoryNotAllowed
+		return nil, ErrMemoryNotAllowed
 	}
 
 	opts := rocksdb.NewDefaultOptions()
