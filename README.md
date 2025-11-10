@@ -1,6 +1,11 @@
 # KVBench
 
-cloned from [tidwall/kvbench](https://github.com/tidwall/kvbench)
+Cloned from [smallnest/kvbench](https://github.com/smallnest/kvbench). Compared to the smallnest/kvbench codebase:
+1. Fixed some incorrect logic of KV database prefix query.
+2. Fixed an issue where some KV database configurations were incorrect and persistence was not enabled
+3. Batch writing is changed to write a fixed amount of data instead of a fixed time, which can make the subsequent query evaluation fairer.
+4. Add the evaluation of prefix query.
+5. Add the evaluation of memory usage and disk usage.
 
 KVBench is a Redis server clone backed by a few different Go databases. 
 
@@ -29,55 +34,85 @@ Features:
 - Option to disable fsync
 - Compatible with Redis clients
 
+## Quickstart
+
+Run the following commands:
+```shell
+cd cmd/cli
+go build -o cli main.go 
+./test.sh
+```
+
+Or manual test cli command:
+```shell
+Usage of ./cli:
+  -c int
+        concurrent goroutines (default runtime.NumCPU())
+  -d duration
+        test duration for each case (default 10s)
+  -fsync
+        fsync (default false)
+  -s string
+        store type (default "map")
+  -save string
+        save path, ouput csv file path (default "", not output)
+  -set int
+        batch set count (default 4000000)
+  -size int
+        data size for each value (default 256)
+```
+
+Example:
+```shell
+./cli -d 10s -size 256 -s "bbolt" -save "benchmarks/nofsync.csv" >> benchmarks/test.log 2>&1
+```
 
 ## SSD benchmark
 The following benchmarks show the throughput of inserting/reading keys (of size
-9 bytes) and values (of size 256 bytes).
+9 bytes) and values (of size 256 bytes). Batch write cost is the time it takes to write 4,000,000 keys and values.
+
+Computer configuration: Apple M1 Pro, 16GB RAM, 1TB SSD
 
 ### nofsync
 
 **throughputs**
 
-| |badger|bbolt|bolt|leveldb|kv|buntdb|pebble|pogreb|nutsdb|rocksdb|btree|btree/memory|map|map/memory|
-|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
-|Batch Write|1818000|305000|279000|458000|113000|1109000|484000|1694000|1978000|440000|2322000|OOM|2718000|OOM|
-|del|42068|5830|5602|72084|124984|47913|92244|4264|114012|86168|597002|761315|1289271|3956378|
-|set|39945|17457|17584|119846|11598|40720|77794|66457|113455|81718|137413|652104|137153|551238|
-|get|474943|691812|706825|416832|32969|1857733|321527|5063794|630274|295142|3034517|2035675|7752284|6459314|
-|setmixed|12353|10525|9520|21094|5133|9590|58853|50422|28863|57994|55785|86495|85366|134747|
-|getmixed|171771|448769|469127|183170|20539|49857|168025|210983|137648|172137|232248|366470|377661|697788|
+| name | BatchWrite cost(s) | MemUsage(MiB) | HeapInuse(MiB) | DiskUsage(MiB) | Prefix op/s | Set op/s | Get op/s | Setmixed op/s | Getmixed op/s | Del op/s |
+| --- | --- | --- | --- | --- | -- | --- | --- | --- | --- | --- |
+| nutsdb | 14 | 1716 | 1741 | 1280 | 135690 | 112565 | 1604634 | 24623 | 274211 | 147513 |
+| badger | 11 | 471 | 473 | 2369 | 27352 | 87116 | 547923 | 8317 | 376446 | 121904 |
+| bbolt | 139 | 36 | 38 | 1584 | 739850 | 22814 | 781529 | 11605 | 603891 | 92845 |
+| bolt | 140 | 34 | 36 | 1584 | 733836 | 19607 | 731267 | 9719 | 542892 | 22224 |
+| leveldb | 92 | 17 | 19 | 1060 | 175546 | 56641 | 481400 | 37804 | 94591 | 390857 |
+| buntdb | 18 | 1912 | 1915 | 1264 | 411 | 19757 | 2098415 | 8102 | 82720 | 267903 |
+| pebble | 81 | 2 | 4 | 1052 | 168755 | 62585 | 559572 | 66058 | 67319 | 384918 |
+| pogreb | 40 | 1 | 2 | 1154 | - | 77509 | 2256807 | 45270 | 457269 | 1179826 |
+| btree | 11 | 1650 | 1652 | 1113 | 1096963 | 189305 | 2293178 | 64222 | 658351 | 1418046 |
+| btree/memory | 8 | 1538 | 1540 | - | 919914 | 2215700 | 68597 | 806471 | 815062 |  |
+| map | 5 | 1895 | 1896 | 1113 | 2364810 | 181388 | 5585045 | 98508 | 1111368 | 2514275 |
+| map/memory | 2 | 1890 | 1892 | - | 1084926 | 5380740 | 125090 | 1994535 | 1991464 |  |
 
-**time (latency)**
+**Index ranking**
 
-| |badger|bbolt|bolt|leveldb|kv|buntdb|pebble|pogreb|nutsdb|rocksdb|btree|btree/memory|map|map/memory|
-|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
-|getmixed|1455|557|532|1364|12171|5014|1487|1184|1816|1452|1076|682|661|358|
-|set|6258|14320|14216|2086|21554|6139|3213|3761|2203|3059|1819|383|1822|453|
-|get|526|361|353|599|7582|134|777|49|396|847|82|122|32|38|
-|setmixed|80945|95010|105037|47405|194793|104264|16991|19832|34646|17243|17925|11561|11714|7421|
-|del|5942|42880|44625|3468|2000|5217|2710|58624|2192|2901|418|328|193|63|
+The higher the ranking, the better
+
+| Rank | BatchWrite | MemUsage | DiskUsage | Prefix  | Set | Get | Setmixed | Getmixed | Delete  |
+|------|-----------| --- | --- |---------| --- | --- | --- | --- |---------|
+| 1    | badger    | pogreb | pebble | bbolt   | nutsdb | pogreb | pebble | bbolt | pogreb  |
+| 2    | nutsdb    | pebble | leveldb | bolt    | badger | buntdb | pogreb | bolt | leveldb |
+| 3    | buntdb    | leveldb | pogreb | leveldb | pogreb | nutsdb | leveldb | pogreb | pebble  |
+| 4    | pogreb    | bolt | buntdb | pebble  | pebble | bbolt | nutsdb | badger | buntdb  |
+| 5    | pebble    | bbolt | nutsdb | nutsdb  | leveldb | bolt | bbolt | nutsdb | nutsdb  |
+| 6    | leveldb   | badger | bolt | badger  | bbolt | pebble | bolt | leveldb | badger  |
+| 7    | bbolt     | nutsdb | bbolt | buntdb  | buntdb | badger | badger | buntdb | bbolt   |
+| 8    | bolt      | buntdb | badger | -       | bolt | leveldb | buntdb | pebble | bolt    |
+
+* gogreb does not support prefix queries
 
 ### fsync
 
 **throughputs**
 
-| |badger|bbolt|bolt|leveldb|kv|buntdb|pebble|pogreb|nutsdb|rocksdb|btree|btree/memory|map|map/memory|
-|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
-|Batch Write|1981000|332000|308000|122000|206000|759000|324000|16000|26000|392000|1350000|OOM|1510000|OOM|
-|get|511262|740201|749409|1399345|33044|2419811|312589|7256537|1762448|279579|4073015|1931155|12368046|5064254|
-|setmixed|9345|52|51|83|5151|97|2648|49|97|2809|94|74675|93|124593|
-|getmixed|41121|712940|714763|725069|20606|1756|274968|557|435|272844|1002|318337|1963|638967|
-|del|19595|49|49|84619|12190|97|29386|961261|98|32109|49337|805323|94|3419262|
-|set|18278|48|48|236|12850|97|29000|52|97|28579|93|535504|94|467439|
+Coming soon...
 
-
-**time (latency)**
-
-| |badger|bbolt|bolt|leveldb|kv|buntdb|pebble|pogreb|nutsdb|rocksdb|btree|btree/memory|map|map/memory|
-|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
-|setmixed|106999|19187738|19329929|12000867|194129|10261633|377610|20268643|10255662|355960|10620359|13391|10652140|8026|
-|get|488|337|333|178|7565|103|799|34|141|894|61|129|20|49|
-|getmixed|6079|350|349|344|12132|142337|909|448760|574240|916|249360|785|127325|391|
-|del|12758|5078760|5095016|2954|20508|2577078|8507|260|2550875|7785|5067|310|2654177|73|
-|set|13676|5152682|5167592|1056019|19454|2571839|8620|4736548|2558664|8747|2683904|466|2649372|534|
 

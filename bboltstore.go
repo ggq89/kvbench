@@ -1,10 +1,9 @@
 package kvbench
 
 import (
-	"errors"
+	"bytes"
 	"sync"
 
-	"github.com/tidwall/match"
 	"go.etcd.io/bbolt"
 )
 
@@ -23,7 +22,7 @@ func bboltKey(key []byte) []byte {
 }
 func NewBboltStore(path string, fsync bool) (Store, error) {
 	if path == ":memory:" {
-		return nil, errMemoryNotAllowed
+		return nil, ErrMemoryNotAllowed
 	}
 	db, err := bbolt.Open(path, 0666, nil)
 	if err != nil {
@@ -108,49 +107,62 @@ func (s *bboltStore) Del(key []byte) (bool, error) {
 }
 
 func (s *bboltStore) Keys(pattern []byte, limit int, withvalues bool) ([][]byte, [][]byte, error) {
-	spattern := string(pattern)
-	min, max := match.Allowable(spattern)
-	bmin := []byte(min)
+	//spattern := string(pattern)
+	//min, max := match.Allowable(spattern)
+	//bmin := []byte(min)
 	var keys [][]byte
 	var vals [][]byte
 	err := s.db.View(func(tx *bbolt.Tx) error {
-		if len(spattern) > 0 && spattern[0] == '*' {
-			err := tx.Bucket(bboltBucket).ForEach(func(key, value []byte) error {
-				if limit > -1 && len(keys) >= limit {
-					return errors.New("done")
-				}
-				skey := string(key[1:])
-				if match.Match(skey, spattern) {
-					keys = append(keys, []byte(skey))
-					if withvalues {
-						vals = append(vals, bcopy(value))
-					}
-				}
-				return nil
-			})
-			if err != nil && err.Error() == "done" {
-				err = nil
-			}
-			return err
-		}
-		c := tx.Bucket(bboltBucket).Cursor()
-		for key, value := c.Seek(bmin); key != nil; key, value = c.Next() {
-			if limit > -1 && len(keys) >= limit {
-				break
-			}
-			skey := string(key[1:])
-			if skey >= max {
-				break
-			}
-			if match.Match(skey, spattern) {
-				keys = append(keys, []byte(skey))
-				if withvalues {
-					vals = append(vals, bcopy(value))
-				}
+		// Assume bucket exists and has keys
+		c := tx.Bucket([]byte(bboltBucket)).Cursor()
+
+		prefix := pattern
+		for key, value := c.Seek(prefix); key != nil && bytes.HasPrefix(key, prefix); key, value = c.Next() {
+			keys = append(keys, key)
+			if withvalues {
+				vals = append(vals, bcopy(value))
 			}
 		}
 		return nil
 	})
+	//err := s.db.View(func(tx *bbolt.Tx) error {
+	//	if len(spattern) > 0 && spattern[0] == '*' {
+	//		err := tx.Bucket(bboltBucket).ForEach(func(key, value []byte) error {
+	//			if limit > -1 && len(keys) >= limit {
+	//				return errors.New("done")
+	//			}
+	//			skey := string(key[1:])
+	//			if match.Match(skey, spattern) {
+	//				keys = append(keys, []byte(skey))
+	//				if withvalues {
+	//					vals = append(vals, bcopy(value))
+	//				}
+	//			}
+	//			return nil
+	//		})
+	//		if err != nil && err.Error() == "done" {
+	//			err = nil
+	//		}
+	//		return err
+	//	}
+	//	c := tx.Bucket(bboltBucket).Cursor()
+	//	for key, value := c.Seek(bmin); key != nil; key, value = c.Next() {
+	//		if limit > -1 && len(keys) >= limit {
+	//			break
+	//		}
+	//		skey := string(key[1:])
+	//		if skey >= max {
+	//			break
+	//		}
+	//		if match.Match(skey, spattern) {
+	//			keys = append(keys, []byte(skey))
+	//			if withvalues {
+	//				vals = append(vals, bcopy(value))
+	//			}
+	//		}
+	//	}
+	//	return nil
+	//})
 	return keys, vals, err
 }
 

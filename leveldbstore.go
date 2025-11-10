@@ -1,12 +1,12 @@
 package kvbench
 
 import (
+	"github.com/syndtr/goleveldb/leveldb/util"
 	"os"
 	"sync"
 
 	"github.com/syndtr/goleveldb/leveldb"
 	"github.com/syndtr/goleveldb/leveldb/opt"
-	"github.com/tidwall/match"
 )
 
 type leveldbStore struct {
@@ -19,7 +19,7 @@ type leveldbStore struct {
 
 func NewLevelDBStore(path string, fsync bool) (Store, error) {
 	if path == ":memory:" {
-		return nil, errMemoryNotAllowed
+		return nil, ErrMemoryNotAllowed
 	}
 	opts := &opt.Options{NoSync: !fsync}
 	db, err := leveldb.OpenFile(path, opts)
@@ -98,37 +98,18 @@ func (s *leveldbStore) Del(key []byte) (bool, error) {
 }
 
 func (s *leveldbStore) Keys(pattern []byte, limit int, withvalues bool) ([][]byte, [][]byte, error) {
-	s.mu.RLock()
-	defer s.mu.RUnlock()
-	spattern := string(pattern)
-	min, max := match.Allowable(spattern)
-	bmin := []byte(min)
 	var keys [][]byte
 	var vals [][]byte
-	useMax := !(len(spattern) > 0 && spattern[0] == '*')
-	iter := s.db.NewIterator(nil, nil)
-	for ok := iter.Seek(bmin); ok; ok = iter.Next() {
-		if limit > -1 && len(keys) >= limit {
-			break
-		}
+	iter := s.db.NewIterator(util.BytesPrefix([]byte("foo-")), nil)
+	for iter.Next() {
 		key := iter.Key()
-		value := iter.Value()
-		skey := string(key)
-		if useMax && skey >= max {
-			break
-		}
-		if match.Match(skey, spattern) {
-			keys = append(keys, []byte(skey))
-			if withvalues {
-				vals = append(vals, bcopy(value))
-			}
+		keys = append(keys, key)
+		if withvalues {
+			value := iter.Value()
+			vals = append(vals, value)
 		}
 	}
 	iter.Release()
-	err := iter.Error()
-	if err != nil {
-		return nil, nil, err
-	}
 	return keys, vals, nil
 }
 

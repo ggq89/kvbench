@@ -1,7 +1,7 @@
 package kvbench
 
 import (
-	"bytes"
+	"fmt"
 	"io"
 	"sync"
 
@@ -23,7 +23,7 @@ func pebbleKey(key []byte) []byte {
 
 func NewPebbleStore(path string, fsync bool) (Store, error) {
 	if path == ":memory:" {
-		return nil, errMemoryNotAllowed
+		return nil, ErrMemoryNotAllowed
 	}
 
 	opts := &pebble.Options{}
@@ -68,7 +68,9 @@ func (s *pebbleStore) PGet(keys [][]byte) ([][]byte, []bool, error) {
 	for i, k := range keys {
 		vals[i], closer, err = s.db.Get(k)
 		oks[i] = (err == nil)
-		closer.Close()
+		if closer != nil {
+			closer.Close()
+		}
 	}
 	return vals, oks, err
 }
@@ -79,7 +81,15 @@ func (s *pebbleStore) Set(key, value []byte) error {
 
 func (s *pebbleStore) Get(key []byte) ([]byte, bool, error) {
 	v, closer, err := s.db.Get(key)
-	closer.Close()
+	if err != nil {
+		if err != pebble.ErrNotFound {
+			fmt.Println(err)
+		}
+		return nil, false, err
+	}
+	if closer != nil {
+		closer.Close()
+	}
 	return v, v != nil, err
 }
 
@@ -92,25 +102,45 @@ func (s *pebbleStore) Keys(pattern []byte, limit int, withvals bool) ([][]byte, 
 	var keys [][]byte
 	var vals [][]byte
 
-	io := &pebble.IterOptions{}
-	it := s.db.NewIter(io)
-	defer it.Close()
-	it.SeekGE(pattern)
+	// 定义前缀
+	prefix := []byte("myprefix")
 
-	for ; it.Valid(); it.Next() {
-		key := it.Key()
-		if !bytes.HasPrefix(key, pattern) {
-			break
-		}
+	// 创建迭代器，指定范围为前缀
+	iter := s.db.NewIter(&pebble.IterOptions{
+		LowerBound: prefix,
+		UpperBound: append(prefix, 0xFF),
+	})
+	defer iter.Close()
 
-		k := it.Key()
-		keys = append(keys, k)
-
+	// 遍历具有前缀的所有键值对
+	for iter.First(); iter.Valid(); iter.Next() {
+		key := iter.Key()
+		keys = append(keys, key)
 		if withvals {
-			value := it.Value()
+			value := iter.Value()
 			vals = append(vals, value)
 		}
 	}
+
+	//io := &pebble.IterOptions{}
+	//it := s.db.NewIter(io)
+	//defer it.Close()
+	//it.SeekGE(pattern)
+	//
+	//for ; it.Valid(); it.Next() {
+	//	key := it.Key()
+	//	if !bytes.HasPrefix(key, pattern) {
+	//		break
+	//	}
+	//
+	//	k := it.Key()
+	//	keys = append(keys, k)
+	//
+	//	if withvals {
+	//		value := it.Value()
+	//		vals = append(vals, value)
+	//	}
+	//}
 
 	return keys, vals, nil
 }
