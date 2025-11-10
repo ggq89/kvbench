@@ -3,7 +3,7 @@ package kvbench
 import (
 	"sync"
 
-	rocksdb "github.com/tecbot/gorocksdb"
+	rocksdb "github.com/linxGnu/grocksdb"
 )
 
 type rocksdbStore struct {

@@ -27,7 +27,7 @@ Features:
   - [rocksdb](https://github.com/tecbot/gorocksdb)
   - [pebble](https://github.com/cockroachdb/pebble)
   - [pogreb](https://github.com/akrylysov/pogreb)
-  - [nutsdb](https://github.com/xujiajun/nutsdb)
+  - [nutsdb](https://github.com/nutsdb/nutsdb)
   - [sniper](https://github.com/recoilme/sniper)
   - map (in-memory) with [AOF persistence](https://redis.io/topics/persistence)
   - btree (in-memory) with [AOF persistence](https://redis.io/topics/persistence)

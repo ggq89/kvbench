@@ -5,7 +5,7 @@ import (
 	"io"
 	"sync"
 
-	"github.com/cockroachdb/pebble"
+	"github.com/cockroachdb/pebble/v2"
 )
 
 type pebbleStore struct {
@@ -106,11 +106,14 @@ func (s *pebbleStore) Keys(pattern []byte, limit int, withvals bool) ([][]byte, 
 	prefix := []byte("myprefix")
 
 	// 创建迭代器，指定范围为前缀
-	iter := s.db.NewIter(&pebble.IterOptions{
+	iter, err := s.db.NewIter(&pebble.IterOptions{
 		LowerBound: prefix,
 		UpperBound: append(prefix, 0xFF),
 	})
 	defer iter.Close()
+	if err != nil {
+		return nil, nil, err
+	}
 
 	// 遍历具有前缀的所有键值对
 	for iter.First(); iter.Valid(); iter.Next() {
