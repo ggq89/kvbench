@@ -20,6 +20,8 @@ type btreeItem struct {
 	value []byte
 }
 
+// byKeys is a comparison function that compares item keys and returns true
+// when a is less than b.
 func byKeys(a, b interface{}) bool {
 	i1, i2 := a.(*btreeItem), b.(*btreeItem)
 	return i1.key < i2.key

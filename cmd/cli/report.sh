@@ -9,7 +9,7 @@ fi
 
 `rm -f benchmarks/*.csv`
 
-STORES=("badger" "bbolt" "bolt" "leveldb" "kv" "buntdb" "pebble" "pogreb" "nutsdb" "rocksdb" "btree" "btree/memory" "map" "map/memory")
+STORES=("badger" "bbolt" "bolt" "leveldb" "kv" "buntdb" "pebble" "pogreb" "nutsdb" "sniper" "rocksdb" "btree" "btree/memory" "map" "map/memory")
 
 echo "name,set,get,set-mixed,get-mixed,del" >> benchmarks/nofsync_throughputs.csv
 echo "name,set,get,set-mixed,get-mixed,del" >> benchmarks/nofsync_time.csv

@@ -44,6 +44,7 @@ func main() {
 		if i < 0 {
 			continue
 		}
+
 		fsync := name[i+1:]
 		name = name[:i]
 		op := items[1]
