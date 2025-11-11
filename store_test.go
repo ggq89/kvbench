@@ -17,18 +17,18 @@ var stores = []struct {
 	{"badger", "badger.db", NewBadgerStore},
 	{"bbolt", "bbolt.db", NewBboltStore},
 	{"bolt", "bolt.db", NewBboltStore},
+	{"buntdb", "buntdb.db", NewBuntdbStore},
 	{"leveldb", "leveldb.db", NewLevelDBStore},
 	{"kv", "kv.db", NewKVStore},
-	{"buntdb", "buntdb.db", NewBuntdbStore},
 	{"rocksdb", "rocksdb.db", NewRocksdbStore},
 	{"pebble", "pebble.db", NewPebbleStore},
 	{"pogreb", "pogreb.db", NewPogrebStore},
+	{"nutsdb", "nutsdb.db", NewNutsdbStore},
+	{"sniper", "sniper", NewSniperStore},
 	{"btree", "btree.db", NewBTreeStore},
 	{"btree/memory", ":memory:", NewBTreeStore},
-	{"nutsdb", "nutsdb.db", NewNutsdbStore},
 	{"map", "map.db", NewMapStore},
 	{"map/memory", ":memory:", NewMapStore},
-	{"sniper", "sniper", NewSniperStore},
 }
 
 func prefixKey(i int) []byte {
