@@ -76,6 +76,7 @@ func main() {
 	record.Headers = append(record.Headers, "name")
 	testBatchWriteFixCount(record, name, store, *setCount)
 	showMemUsage(record, name)
+	log.Infof("path=%s", path)
 	showDiskUsage(record, name, path)
 	testKeys(record, name, store)
 	testSet(record, name, store)
@@ -497,7 +498,7 @@ func getStore(s string, fsync bool, path string) (kvbench.Store, string, error) 
 		}
 		store, err = kvbench.NewLevelDBStore(path, fsync)
 	case "kv":
-		log.Warningf("kv store is unstable")
+		// log.Warningf("kv store is unstable")
 		if path == "" {
 			path = "kv.db"
 		}
