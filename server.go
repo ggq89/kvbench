@@ -45,26 +45,26 @@ func Start(opts Options) error {
 	switch which {
 	default:
 		err = fmt.Errorf("unknown store type: %v", which)
-	case "map":
+	case "badger":
 		if path == "" {
-			path = "map.db"
+			path = "badger.db"
 		}
-		store, err = NewMapStore(path, fsync)
-	case "btree":
-		if path == "" {
-			path = "btree.db"
-		}
-		store, err = NewBTreeStore(path, fsync)
-	case "bolt":
-		if path == "" {
-			path = "bolt.db"
-		}
-		store, err = NewBoltStore(path, fsync)
+		store, err = NewBadgerStore(path, fsync)
 	case "bbolt":
 		if path == "" {
 			path = "bbolt.db"
 		}
 		store, err = NewBboltStore(path, fsync)
+	case "bolt":
+		if path == "" {
+			path = "bolt.db"
+		}
+		store, err = NewBoltStore(path, fsync)
+	case "buntdb":
+		if path == "" {
+			path = "buntdb.db"
+		}
+		store, err = NewBuntdbStore(path, fsync)
 	case "leveldb":
 		if path == "" {
 			path = "leveldb.db"
@@ -76,16 +76,6 @@ func Start(opts Options) error {
 			path = "kv.db"
 		}
 		store, err = NewKVStore(path, fsync)
-	case "badger":
-		if path == "" {
-			path = "badger.db"
-		}
-		store, err = NewBadgerStore(path, fsync)
-	case "buntdb":
-		if path == "" {
-			path = "buntdb.db"
-		}
-		store, err = NewBuntdbStore(path, fsync)
 	case "rocksdb":
 		if path == "" {
 			path = "rocksdb.db"
@@ -106,6 +96,31 @@ func Start(opts Options) error {
 			path = "nutsdb.db"
 		}
 		store, err = NewNutsdbStore(path, fsync)
+	case "sniper":
+		if path == "" {
+			path = "sniper.db"
+		}
+		store, err = NewSniperStore(path, fsync)
+	case "btree":
+		if path == "" {
+			path = "btree.db"
+		}
+		store, err = NewBTreeStore(path, fsync)
+	case "btree/memory":
+		if path == "" {
+			path = "btree_memory.db"
+		}
+		store, err = NewBTreeStore(path, fsync)
+	case "map":
+		if path == "" {
+			path = "map.db"
+		}
+		store, err = NewMapStore(path, fsync)
+	case "map/memory":
+		if path == "" {
+			path = "map_memory.db"
+		}
+		store, err = NewMapStore(path, fsync)
 	}
 
 	if err != nil {

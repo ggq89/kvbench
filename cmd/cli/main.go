@@ -468,26 +468,26 @@ func getStore(s string, fsync bool, path string) (kvbench.Store, string, error) 
 	switch s {
 	default:
 		err = fmt.Errorf("unknown store type: %v", s)
-	case "map":
+	case "badger":
 		if path == "" {
-			path = "map.db"
+			path = "badger.db"
 		}
-		store, err = kvbench.NewMapStore(path, fsync)
-	case "btree":
-		if path == "" {
-			path = "btree.db"
-		}
-		store, err = kvbench.NewBTreeStore(path, fsync)
-	case "bolt":
-		if path == "" {
-			path = "bolt.db"
-		}
-		store, err = kvbench.NewBoltStore(path, fsync)
+		store, err = kvbench.NewBadgerStore(path, fsync)
 	case "bbolt":
 		if path == "" {
 			path = "bbolt.db"
 		}
 		store, err = kvbench.NewBboltStore(path, fsync)
+	case "bolt":
+		if path == "" {
+			path = "bolt.db"
+		}
+		store, err = kvbench.NewBoltStore(path, fsync)
+	case "buntdb":
+		if path == "" {
+			path = "buntdb.db"
+		}
+		store, err = kvbench.NewBuntdbStore(path, fsync)
 	case "leveldb":
 		if path == "" {
 			path = "leveldb.db"
@@ -499,16 +499,6 @@ func getStore(s string, fsync bool, path string) (kvbench.Store, string, error) 
 			path = "kv.db"
 		}
 		store, err = kvbench.NewKVStore(path, fsync)
-	case "badger":
-		if path == "" {
-			path = "badger.db"
-		}
-		store, err = kvbench.NewBadgerStore(path, fsync)
-	case "buntdb":
-		if path == "" {
-			path = "buntdb.db"
-		}
-		store, err = kvbench.NewBuntdbStore(path, fsync)
 	case "rocksdb":
 		if path == "" {
 			path = "rocksdb.db"
@@ -529,6 +519,31 @@ func getStore(s string, fsync bool, path string) (kvbench.Store, string, error) 
 			path = "nutsdb.db"
 		}
 		store, err = kvbench.NewNutsdbStore(path, fsync)
+	case "sniper":
+		if path == "" {
+			path = "sniper.db"
+		}
+		store, err = kvbench.NewSniperStore(path, fsync)
+	case "btree":
+		if path == "" {
+			path = "btree.db"
+		}
+		store, err = kvbench.NewBTreeStore(path, fsync)
+	case "btree/memory":
+		if path == "" {
+			path = "btree_memory.db"
+		}
+		store, err = kvbench.NewBTreeStore(path, fsync)
+	case "map":
+		if path == "" {
+			path = "map.db"
+		}
+		store, err = kvbench.NewMapStore(path, fsync)
+	case "map/memory":
+		if path == "" {
+			path = "map_memory.db"
+		}
+		store, err = kvbench.NewMapStore(path, fsync)
 	}
 
 	return store, path, err

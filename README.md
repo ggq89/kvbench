@@ -1,6 +1,6 @@
 # KVBench
 
-Cloned from [smallnest/kvbench](https://github.com/smallnest/kvbench). Compared to the smallnest/kvbench codebase:
+Cloned from [liulhdarks/go-kvbench](https://github.com/liulhdarks/go-kvbench). Compared to the [smallnest/kvbench](https://github.com/smallnest/kvbench) codebase:
 1. Fixed some incorrect logic of KV database prefix query.
 2. Fixed an issue where some KV database configurations were incorrect and persistence was not enabled
 3. Batch writing is changed to write a fixed amount of data instead of a fixed time, which can make the subsequent query evaluation fairer.
@@ -29,8 +29,8 @@ Features:
   - [pogreb](https://github.com/akrylysov/pogreb)
   - [nutsdb](https://github.com/nutsdb/nutsdb)
   - [sniper](https://github.com/recoilme/sniper)
-  - map (in-memory) with [AOF persistence](https://redis.io/topics/persistence)
   - btree (in-memory) with [AOF persistence](https://redis.io/topics/persistence)
+  - map (in-memory) with [AOF persistence](https://redis.io/topics/persistence)
 - Option to disable fsync
 - Compatible with Redis clients
 

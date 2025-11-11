@@ -3,7 +3,7 @@
 SIZE=256
 
 # STORES=("badger" "bbolt" "bolt" "leveldb" "kv" "buntdb" "pebble" "pogreb" "nutsdb" "rocksdb" "btree" "btree/memory" "map" "map/memory")
-STORES=("nutsdb" "sniper" "badger" "bbolt" "bolt" "leveldb" "buntdb" "pebble" "pogreb" "rocksdb" "btree" "btree/memory" "map" "map/memory" "kv")
+STORES=("badger" "bbolt" "bolt" "buntdb" "leveldb" "kv" "rocksdb" "pebble" "pogreb" "nutsdb" "sniper" "btree" "btree/memory" "map" "map/memory")
 
 export LD_LIBRARY_PATH=/usr/local/lib
 

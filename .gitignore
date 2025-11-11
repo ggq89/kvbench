@@ -29,3 +29,4 @@ cosy
 DEV_VERSION
 cmd/cli/cli
 *.db
+*.log
