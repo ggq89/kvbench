@@ -11,10 +11,10 @@ fi
 
 STORES=("badger" "bbolt" "bolt" "buntdb" "leveldb" "kv" "rocksdb" "pebble" "pogreb" "nutsdb" "sniper" "btree" "btree/memory" "map" "map/memory")
 
-echo "name,set,get,set-mixed,get-mixed,del" >> benchmarks/nofsync_throughputs.csv
-echo "name,set,get,set-mixed,get-mixed,del" >> benchmarks/nofsync_time.csv
-echo "name,set,get,set-mixed,get-mixed,del" >> benchmarks/fsync_throughputs.csv
-echo "name,set,get,set-mixed,get-mixed,del" >> benchmarks/fsync_time.csv
+echo "name,batch,set,get,set-mixed,get-mixed,del" >> benchmarks/nofsync_throughputs.csv
+echo "name,batch,set,get,set-mixed,get-mixed,del" >> benchmarks/nofsync_time.csv
+echo "name,batch,set,get,set-mixed,get-mixed,del" >> benchmarks/fsync_throughputs.csv
+echo "name,batch,set,get,set-mixed,get-mixed,del" >> benchmarks/fsync_time.csv
 
 for i in "${STORES[@]}"
 do

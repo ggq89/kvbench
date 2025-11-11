@@ -121,21 +121,27 @@ func (s *nutsdbStore) Keys(pattern []byte, limit int, withvals bool) ([][]byte, 
 	var keys [][]byte
 	var vals [][]byte
 
-	err := s.db.View(func(tx *nutsdb.Tx) error {
-		entries, err := tx.PrefixScan(nutsdbBucket, pattern, 0, nutsdb.ScanNoLimit)
+	tx, err := s.db.Begin(false)
+	if err != nil {
+		return keys, vals, err
+	}
 
-		if err != nil {
-			return err
+	it := nutsdb.NewIterator(tx, nutsdbBucket, nutsdb.IteratorOptions{Reverse: false})
+	for has := it.Seek(pattern); has; has = it.Next() {
+		keys = append(keys, bcopy(it.Key()))
+		if withvals {
+			value, err := it.Value()
+			if err != nil {
+				return keys, vals, err
+			}
+			vals = append(vals, bcopy(value))
 		}
+	}
 
-		vals = entries
-		// for i, entry := range entries {
-		// 	keys[i] = entry.Key
-		// 	vals[i] = entry.Value
-		// }
-
-		return nil
-	})
+	err = tx.Commit()
+	if err != nil {
+		panic(err)
+	}
 
 	return keys, vals, err
 }

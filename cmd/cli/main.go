@@ -333,7 +333,10 @@ func testGetSet(record *Record, name string, store kvbench.Store) {
 				case <-ctx.Done():
 					break LOOP
 				default:
-					store.Get(genKey(i))
+					_, ok, _ := store.Get(genKey(i))
+					if !ok {
+						i = index
+					}
 					i += uint64(*c)
 					count++
 				}
