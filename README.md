@@ -24,7 +24,7 @@ Features:
   - [buntdb](https://github.com/tidwall/buntdb)
   - [LevelDB](https://github.com/syndtr/goleveldb)
   - [modernc.org/kv](https://gitlab.com/cznic/kv)
-  - [rocksdb](https://github.com/tecbot/gorocksdb)
+  - [rocksdb](https://github.com/linxGnu/grocksdb)
   - [pebble](https://github.com/cockroachdb/pebble)
   - [pogreb](https://github.com/akrylysov/pogreb)
   - [nutsdb](https://github.com/nutsdb/nutsdb)
