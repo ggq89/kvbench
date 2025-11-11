@@ -1,48 +1,54 @@
 package kvbench
 
 import (
-	"sync"
-
 	"github.com/nutsdb/nutsdb"
 )
 
-var nutsdbBucket = "keys"
+const nutsdbBucket = "keys"
 
 type nutsdbStore struct {
-	mu sync.RWMutex
+	// mu sync.RWMutex
 	db *nutsdb.DB
 }
 
-var defaultSegmentSize int64 = 256 * nutsdb.MB
+const defaultSegmentSize int64 = 256 * nutsdb.MB
 
 // DefaultOptions represents the default options.
 var pptions = func() nutsdb.Options {
-	return nutsdb.Options{
-		EntryIdxMode: nutsdb.HintKeyAndRAMIdxMode,
-		SegmentSize:  defaultSegmentSize,
-		NodeNum:      1,
-		RWMode:       nutsdb.FileIO,
-		SyncEnable:   false,
-	}
+	opt := nutsdb.DefaultOptions
+	opt.EntryIdxMode = nutsdb.HintKeyAndRAMIdxMode
+	opt.SegmentSize = defaultSegmentSize
+	opt.NodeNum = 1
+	opt.RWMode = nutsdb.FileIO
+	opt.SyncEnable = false
+	return opt
 }()
 
-func nutsdbKey(key []byte) []byte {
-	r := make([]byte, len(key)+1)
-	r[0] = 'k'
-	copy(r[1:], key)
-	return r
-}
+// func nutsdbKey(key []byte) []byte {
+// 	r := make([]byte, len(key)+1)
+// 	r[0] = 'k'
+// 	copy(r[1:], key)
+// 	return r
+// }
+
 func NewNutsdbStore(path string, fsync bool) (Store, error) {
 	if path == ":memory:" {
 		return nil, ErrMemoryNotAllowed
 	}
 
-	// opt := nutsdb.DefaultOptions
 	opt := pptions
 	opt.SyncEnable = fsync
 	opt.Dir = path
 
 	db, err := nutsdb.Open(opt)
+	if err != nil {
+		return nil, err
+	}
+
+	err = db.Update(func(tx *nutsdb.Tx) error {
+		// you should call Bucket with data structure and the name of bucket first
+		return tx.NewKVBucket(nutsdbBucket)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -60,7 +66,7 @@ func (s *nutsdbStore) Close() error {
 func (s *nutsdbStore) PSet(keys, vals [][]byte) error {
 	return s.db.Update(func(tx *nutsdb.Tx) error {
 		for i, k := range keys {
-			tx.Put(nutsdbBucket, k, vals[i], 0)
+			tx.Put(nutsdbBucket, k, vals[i], nutsdb.Persistent)
 		}
 
 		return nil
@@ -91,7 +97,7 @@ func (s *nutsdbStore) PGet(keys [][]byte) ([][]byte, []bool, error) {
 
 func (s *nutsdbStore) Set(key, value []byte) error {
 	return s.db.Update(func(tx *nutsdb.Tx) error {
-		return tx.Put(nutsdbBucket, key, value, 0)
+		return tx.Put(nutsdbBucket, key, value, nutsdb.Persistent)
 	})
 }
 
