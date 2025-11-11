@@ -58,6 +58,7 @@ func main() {
 	if !memory {
 		defer os.RemoveAll(path)
 	}
+	log.Infof("path=%s", path)
 
 	defer store.Close()
 	name := *s
@@ -76,7 +77,6 @@ func main() {
 	record.Headers = append(record.Headers, "name")
 	testBatchWriteFixCount(record, name, store, *setCount)
 	showMemUsage(record, name)
-	log.Infof("path=%s", path)
 	showDiskUsage(record, name, path)
 	testKeys(record, name, store)
 	testSet(record, name, store)
