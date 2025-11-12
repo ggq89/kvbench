@@ -45,13 +45,13 @@ func NewNutsdbStore(path string, fsync bool) (Store, error) {
 		return nil, err
 	}
 
-	err = db.Update(func(tx *nutsdb.Tx) error {
-		// you should call Bucket with data structure and the name of bucket first
-		return tx.NewKVBucket(nutsdbBucket)
-	})
-	if err != nil {
-		return nil, err
-	}
+	// err = db.Update(func(tx *nutsdb.Tx) error {
+	// 	// you should call Bucket with data structure and the name of bucket first
+	// 	return tx.NewKVBucket(nutsdbBucket)
+	// })
+	// if err != nil {
+	// 	return nil, err
+	// }
 
 	return &nutsdbStore{
 		db: db,
@@ -83,7 +83,7 @@ func (s *nutsdbStore) PGet(keys [][]byte) ([][]byte, []bool, error) {
 		for i, k := range keys {
 			e, err := tx.Get(nutsdbBucket, k)
 			if e != nil {
-				vals[i] = e
+				vals[i] = e.Value
 			}
 
 			oks[i] = (err == nil)
@@ -96,9 +96,12 @@ func (s *nutsdbStore) PGet(keys [][]byte) ([][]byte, []bool, error) {
 }
 
 func (s *nutsdbStore) Set(key, value []byte) error {
-	return s.db.Update(func(tx *nutsdb.Tx) error {
-		return tx.Put(nutsdbBucket, key, value, nutsdb.Persistent)
+	err := s.db.Update(func(tx *nutsdb.Tx) error {
+		e := tx.Put(nutsdbBucket, key, value, nutsdb.Persistent)
+		return e
 	})
+
+	return err
 }
 
 func (s *nutsdbStore) Get(key []byte) ([]byte, bool, error) {
@@ -107,7 +110,10 @@ func (s *nutsdbStore) Get(key []byte) ([]byte, bool, error) {
 	var err error
 
 	s.db.View(func(tx *nutsdb.Tx) error {
-		v, err = tx.Get(nutsdbBucket, key)
+		e, err := tx.Get(nutsdbBucket, key)
+		if e != nil {
+			v = e.Value
+		}
 		ok = err == nil
 		return err
 	})
@@ -128,22 +134,32 @@ func (s *nutsdbStore) Keys(pattern []byte, limit int, withvals bool) ([][]byte, 
 	var vals [][]byte
 
 	err := s.db.View(func(tx *nutsdb.Tx) error {
-		iterator := nutsdb.NewIterator(tx, nutsdbBucket, nutsdb.IteratorOptions{Reverse: false})
-
-		for iterator.Valid() {
-			keys = append(keys, bcopy(iterator.Key()))
-			if withvals {
-				value, err := iterator.Value()
-				if err != nil {
-					return err
-				}
-				vals = append(vals, bcopy(value))
-			}
-
-			if !iterator.Next() {
-				break
-			}
+		entries, err := tx.PrefixScan(nutsdbBucket, pattern, 0, nutsdb.ScanNoLimit)
+		if err != nil {
+			return err
 		}
+
+		for i, entry := range entries {
+			keys[i] = entry.Key
+			vals[i] = entry.Value
+		}
+
+		// iterator := nutsdb.NewIterator(tx, nutsdbBucket, nutsdb.IteratorOptions{Reverse: false})
+
+		// for iterator.Valid() {
+		// 	keys = append(keys, bcopy(iterator.Key()))
+		// 	if withvals {
+		// 		value, err := iterator.Value()
+		// 		if err != nil {
+		// 			return err
+		// 		}
+		// 		vals = append(vals, bcopy(value))
+		// 	}
+
+		// 	if !iterator.Next() {
+		// 		break
+		// 	}
+		// }
 
 		return nil
 	})

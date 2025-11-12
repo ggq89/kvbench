@@ -10,7 +10,7 @@ require (
 	github.com/cockroachdb/pebble/v2 v2.1.1
 	github.com/dgraph-io/badger/v4 v4.8.0
 	github.com/linxGnu/grocksdb v1.10.3
-	github.com/nutsdb/nutsdb v1.0.4
+	github.com/nutsdb/nutsdb v0.14.3
 	github.com/recoilme/sniper v0.4.1
 	github.com/smallnest/log v0.0.0-20190128090703-5dc5752d8772
 	github.com/syndtr/goleveldb v1.0.0
