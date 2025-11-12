@@ -114,7 +114,7 @@ func (s *nutsdbStore) Keys(pattern []byte, limit int, withvals bool) ([][]byte, 
 	var err error
 
 	err = s.db.View(func(tx *nutsdb.Tx) error {
-		keys, err = tx.GetKeys(nutsdbBucket)
+		vals, err = tx.PrefixScan(nutsdbBucket, pattern, 0, limit)
 		if err != nil {
 			return err
 		}

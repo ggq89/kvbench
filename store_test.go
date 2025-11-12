@@ -29,6 +29,7 @@ var stores = []struct {
 	{"btree/memory", ":memory:", NewBTreeStore},
 	{"map", "map.db", NewMapStore},
 	{"map/memory", ":memory:", NewMapStore},
+	{"lotusdb", "lotusdb.db", NewNutsdbStore},
 }
 
 func prefixKey(i int) []byte {

@@ -31,6 +31,7 @@ Features:
   - [sniper](https://github.com/recoilme/sniper)
   - btree (in-memory) with [AOF persistence](https://redis.io/topics/persistence)
   - map (in-memory) with [AOF persistence](https://redis.io/topics/persistence)
+  - [lotusdb](github.com/lotusdblabs/lotusdb)
 - Option to disable fsync
 - Compatible with Redis clients
 
@@ -71,7 +72,7 @@ Example:
 The following benchmarks show the throughput of inserting/reading keys (of size
 9 bytes) and values (of size 256 bytes). Batch write cost is the time it takes to write 4,000,000 keys and values.
 
-Computer configuration: Apple M1 Pro, 16GB RAM, 1TB SSD
+Computer configuration: Apple M4 Pro, 14（10性能和4能效）, 48 GB RAM, 500GB SSD
 
 ### nofsync
 

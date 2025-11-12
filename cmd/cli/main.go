@@ -548,6 +548,11 @@ func getStore(s string, fsync bool, path string) (kvbench.Store, string, error) 
 			path = "map_memory.db"
 		}
 		store, err = kvbench.NewMapStore(path, fsync)
+	case "lotusdb":
+		if path == "" {
+			path = "lotusdb.db"
+		}
+		store, err = kvbench.NewLotusdbStore(path, fsync)
 	}
 
 	return store, path, err

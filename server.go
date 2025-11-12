@@ -121,6 +121,11 @@ func Start(opts Options) error {
 			path = "map_memory.db"
 		}
 		store, err = NewMapStore(path, fsync)
+	case "lotusdb":
+		if path == "" {
+			path = "lotusdb.db"
+		}
+		store, err = NewLotusdbStore(path, fsync)
 	}
 
 	if err != nil {
