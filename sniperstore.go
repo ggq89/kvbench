@@ -80,8 +80,7 @@ func (s *sniperStore) Del(key []byte) (bool, error) {
 }
 
 func (s *sniperStore) Keys(pattern []byte, limit int, withvalues bool) ([][]byte, [][]byte, error) {
-
-	return nil, nil, nil
+	return nil, nil, ErrNotSupported
 }
 
 func (s *sniperStore) FlushDB() error {

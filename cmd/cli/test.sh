@@ -32,6 +32,7 @@ echo "=========== test fsync ==========="
 for i in "${STORES[@]}"
 do
 #   ./main -d 1m -size ${SIZE} -s "$i" -fsync >> benchmarks/test.log 2>&1
+  echo "$i"
 	./cli -d 10s -size ${SIZE} -s "$i" -save "benchmarks/fsync.csv" -fsync >> benchmarks/test.log 2>&1
 done
 

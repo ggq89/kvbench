@@ -3,22 +3,13 @@ package kvbench
 import (
 	"fmt"
 	"io"
-	"sync"
 
 	"github.com/cockroachdb/pebble/v2"
 )
 
 type pebbleStore struct {
-	mu sync.RWMutex
 	db *pebble.DB
 	wo *pebble.WriteOptions
-}
-
-func pebbleKey(key []byte) []byte {
-	r := make([]byte, len(key)+1)
-	r[0] = 'k'
-	copy(r[1:], key)
-	return r
 }
 
 func NewPebbleStore(path string, fsync bool) (Store, error) {
@@ -26,7 +17,7 @@ func NewPebbleStore(path string, fsync bool) (Store, error) {
 		return nil, ErrMemoryNotAllowed
 	}
 
-	opts := &pebble.Options{}
+	opts := pebble.DefaultOptions()
 	if !fsync {
 		opts.DisableWAL = true
 	}
@@ -46,8 +37,7 @@ func NewPebbleStore(path string, fsync bool) (Store, error) {
 }
 
 func (s *pebbleStore) Close() error {
-	s.db.Close()
-	return nil
+	return s.db.Close()
 }
 
 func (s *pebbleStore) PSet(keys, vals [][]byte) error {
@@ -102,14 +92,27 @@ func (s *pebbleStore) Keys(pattern []byte, limit int, withvals bool) ([][]byte, 
 	var keys [][]byte
 	var vals [][]byte
 
-	// 定义前缀
-	prefix := []byte("myprefix")
+	keyUpperBound := func(b []byte) []byte {
+		end := make([]byte, len(b))
+		copy(end, b)
+		for i := len(end) - 1; i >= 0; i-- {
+			end[i] = end[i] + 1
+			if end[i] != 0 {
+				return end[:i+1]
+			}
+		}
+		return nil // no upper-bound
+	}
+
+	prefixIterOptions := func(prefix []byte) *pebble.IterOptions {
+		return &pebble.IterOptions{
+			LowerBound: prefix,
+			UpperBound: keyUpperBound(prefix),
+		}
+	}
 
 	// 创建迭代器，指定范围为前缀
-	iter, err := s.db.NewIter(&pebble.IterOptions{
-		LowerBound: prefix,
-		UpperBound: append(prefix, 0xFF),
-	})
+	iter, err := s.db.NewIter(prefixIterOptions(pattern))
 	defer iter.Close()
 	if err != nil {
 		return nil, nil, err
@@ -124,26 +127,6 @@ func (s *pebbleStore) Keys(pattern []byte, limit int, withvals bool) ([][]byte, 
 			vals = append(vals, value)
 		}
 	}
-
-	//io := &pebble.IterOptions{}
-	//it := s.db.NewIter(io)
-	//defer it.Close()
-	//it.SeekGE(pattern)
-	//
-	//for ; it.Valid(); it.Next() {
-	//	key := it.Key()
-	//	if !bytes.HasPrefix(key, pattern) {
-	//		break
-	//	}
-	//
-	//	k := it.Key()
-	//	keys = append(keys, k)
-	//
-	//	if withvals {
-	//		value := it.Value()
-	//		vals = append(vals, value)
-	//	}
-	//}
 
 	return keys, vals, nil
 }

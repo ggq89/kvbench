@@ -1,47 +1,37 @@
 package kvbench
 
 import (
-	"sync"
-
 	"github.com/syndtr/goleveldb/leveldb"
 	"github.com/syndtr/goleveldb/leveldb/opt"
 	"github.com/syndtr/goleveldb/leveldb/util"
 )
 
 type leveldbStore struct {
-	mu    sync.RWMutex
-	db    *leveldb.DB
-	path  string
-	fsync bool
-	wo    *opt.WriteOptions
+	db *leveldb.DB
+	wo *opt.WriteOptions
 }
 
 func NewLevelDBStore(path string, fsync bool) (Store, error) {
 	if path == ":memory:" {
 		return nil, ErrMemoryNotAllowed
 	}
+
 	opts := &opt.Options{NoSync: !fsync}
 	db, err := leveldb.OpenFile(path, opts)
 	if err != nil {
 		return nil, err
 	}
+
 	return &leveldbStore{
-		db:    db,
-		path:  path,
-		fsync: fsync,
-		wo:    &opt.WriteOptions{Sync: fsync},
+		db: db,
+		wo: &opt.WriteOptions{Sync: fsync},
 	}, nil
 }
 
 func (s *leveldbStore) Close() error {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	s.db.Close()
-	return nil
+	return s.db.Close()
 }
 func (s *leveldbStore) PSet(keys, values [][]byte) error {
-	s.mu.RLock()
-	defer s.mu.RUnlock()
 	batch := new(leveldb.Batch)
 	for i := range keys {
 		batch.Put(keys[i], values[i])
@@ -64,14 +54,10 @@ func (s *leveldbStore) PGet(keys [][]byte) ([][]byte, []bool, error) {
 }
 
 func (s *leveldbStore) Set(key, value []byte) error {
-	s.mu.RLock()
-	defer s.mu.RUnlock()
 	return s.db.Put(key, value, s.wo)
 }
 
 func (s *leveldbStore) Get(key []byte) ([]byte, bool, error) {
-	s.mu.RLock()
-	defer s.mu.RUnlock()
 	v, err := s.db.Get(key, nil)
 	if err != nil {
 		if err == leveldb.ErrNotFound {
@@ -83,13 +69,7 @@ func (s *leveldbStore) Get(key []byte) ([]byte, bool, error) {
 }
 
 func (s *leveldbStore) Del(key []byte) (bool, error) {
-	s.mu.RLock()
-	defer s.mu.RUnlock()
-	ok, err := s.db.Has(key, nil)
-	if !ok || err != nil {
-		return ok, err
-	}
-	err = s.db.Delete(key, s.wo)
+	err := s.db.Delete(key, s.wo)
 	if err != nil {
 		return false, err
 	}
@@ -99,7 +79,7 @@ func (s *leveldbStore) Del(key []byte) (bool, error) {
 func (s *leveldbStore) Keys(pattern []byte, limit int, withvalues bool) ([][]byte, [][]byte, error) {
 	var keys [][]byte
 	var vals [][]byte
-	iter := s.db.NewIterator(util.BytesPrefix([]byte("foo-")), nil)
+	iter := s.db.NewIterator(util.BytesPrefix(pattern), nil)
 	for iter.Next() {
 		key := iter.Key()
 		keys = append(keys, key)
@@ -109,23 +89,14 @@ func (s *leveldbStore) Keys(pattern []byte, limit int, withvalues bool) ([][]byt
 		}
 	}
 	iter.Release()
+	err := iter.Error()
+	if err != nil {
+		return nil, nil, err
+	}
+
 	return keys, vals, nil
 }
 
 func (s *leveldbStore) FlushDB() error {
-	s.mu.Lock()
-	defer s.mu.Unlock()
-	s.db.Close()
-	// os.RemoveAll(s.path)
-	s.db = nil
-	var opts *opt.Options
-	if !s.fsync {
-		opts = &opt.Options{NoSync: !s.fsync}
-	}
-	db, err := leveldb.OpenFile(s.path, opts)
-	if err != nil {
-		return err
-	}
-	s.db = db
-	return nil
+	return s.db.Close()
 }

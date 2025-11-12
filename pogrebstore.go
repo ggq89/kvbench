@@ -1,31 +1,21 @@
 package kvbench
 
 import (
-	"sync"
-
 	"github.com/akrylysov/pogreb"
 )
 
 var pogrebBucket = []byte("keys")
 
 type pogrebStore struct {
-	mu sync.RWMutex
 	db *pogreb.DB
 }
 
-func pogrebKey(key []byte) []byte {
-	r := make([]byte, len(key)+1)
-	r[0] = 'k'
-	copy(r[1:], key)
-	return r
-}
 func NewPogrebStore(path string, fsync bool) (Store, error) {
 	if path == ":memory:" {
 		return nil, ErrMemoryNotAllowed
 	}
 
 	opts := &pogreb.Options{}
-
 	if fsync {
 		opts.BackgroundSyncInterval = -1
 	}
@@ -41,8 +31,7 @@ func NewPogrebStore(path string, fsync bool) (Store, error) {
 }
 
 func (s *pogrebStore) Close() error {
-	s.db.Close()
-	return nil
+	return s.db.Close()
 }
 
 func (s *pogrebStore) PSet(keys, values [][]byte) error {
@@ -93,5 +82,5 @@ func (s *pogrebStore) Keys(pattern []byte, limit int, withvalues bool) ([][]byte
 }
 
 func (s *pogrebStore) FlushDB() error {
-	return s.db.Close()
+	return s.db.Sync()
 }

@@ -1,33 +1,23 @@
 package kvbench
 
 import (
-	"sync"
-
 	"github.com/tidwall/buntdb"
 )
 
 type buntdbStore struct {
-	mu sync.RWMutex
 	db *buntdb.DB
 }
 
-func buntdbKey(key []byte) []byte {
-	r := make([]byte, len(key)+1)
-	r[0] = 'k'
-	copy(r[1:], key)
-	return r
-}
-
 func NewBuntdbStore(path string, fsync bool) (Store, error) {
-	opts := buntdb.Config{}
-	if fsync {
-		opts.SyncPolicy = buntdb.Always
-	}
 	db, err := buntdb.Open(path)
 	if err != nil {
 		return nil, err
 	}
 
+	opts := buntdb.Config{}
+	if fsync {
+		opts.SyncPolicy = buntdb.Always
+	}
 	db.SetConfig(opts)
 
 	return &buntdbStore{
@@ -120,7 +110,4 @@ func (s *buntdbStore) Keys(pattern []byte, limit int, withvals bool) ([][]byte, 
 
 func (s *buntdbStore) FlushDB() error {
 	return s.db.Close()
-	// return s.db.Update(func(tx *buntdb.Tx) error {
-	// 	return tx.DeleteAll()
-	// })
 }

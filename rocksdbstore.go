@@ -14,13 +14,6 @@ type rocksdbStore struct {
 	fo *rocksdb.FlushOptions
 }
 
-func rocksdbKey(key []byte) []byte {
-	r := make([]byte, len(key)+1)
-	r[0] = 'k'
-	copy(r[1:], key)
-	return r
-}
-
 func NewRocksdbStore(path string, fsync bool) (Store, error) {
 	if path == ":memory:" {
 		return nil, ErrMemoryNotAllowed
@@ -95,21 +88,18 @@ func (s *rocksdbStore) Keys(pattern []byte, limit int, withvals bool) ([][]byte,
 	var keys [][]byte
 	var vals [][]byte
 
-	it := s.db.NewIterator(s.ro)
-	defer it.Close()
-	it.Seek(pattern)
+	iter := s.db.NewIterator(s.ro)
+	defer iter.Close()
 
-	for it = it; it.Valid(); it.Next() {
-		key := it.Key()
-
+	for iter.Seek(pattern); iter.ValidForPrefix(pattern); iter.Next() {
+		key := iter.Key()
 		k := make([]byte, key.Size())
 		copy(k, key.Data())
 		key.Free()
-
 		keys = append(keys, k)
 
 		if withvals {
-			value := it.Value()
+			value := iter.Value()
 			v := make([]byte, value.Size())
 			copy(v, value.Data())
 			value.Free()
