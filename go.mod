@@ -18,9 +18,10 @@ require (
 	github.com/tidwall/btree v1.8.1
 	github.com/tidwall/buntdb v1.3.2
 	github.com/tidwall/match v1.2.0
-	github.com/tidwall/redcon v1.6.0
+	github.com/tidwall/redcon v1.6.2
 	github.com/tidwall/redlog v1.2.1
 	go.etcd.io/bbolt v1.4.3
+	go.mills.io/bitcask/v2 v2.1.5
 	modernc.org/kv v1.0.6
 )
 
@@ -28,6 +29,7 @@ require (
 	github.com/DataDog/zstd v1.5.7 // indirect
 	github.com/RaduBerinde/axisds v0.0.0-20250419182453-5135a0650657 // indirect
 	github.com/RaduBerinde/btreemap v0.0.0-20250419174037-3d62b7205d54 // indirect
+	github.com/abcum/lcp v0.0.0-20201209214815-7a3f3840be81 // indirect
 	github.com/antlabs/stl v0.0.1 // indirect
 	github.com/antlabs/timer v0.0.11 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
@@ -49,10 +51,12 @@ require (
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/snappy v1.0.0 // indirect
 	github.com/google/flatbuffers v25.2.10+incompatible // indirect
+	github.com/hashicorp/go-immutable-radix/v2 v2.0.0 // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
 	github.com/klauspost/compress v1.18.1 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/kr/text v0.2.0 // indirect
+	github.com/mattetti/filebuffer v1.0.1 // indirect
 	github.com/minio/minlz v1.0.1-0.20250507153514-87eb42fe8882 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/onsi/ginkgo v1.13.0 // indirect
@@ -67,6 +71,7 @@ require (
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
 	github.com/rosedblabs/diskhash v0.0.0-20230910084041-289755737e2a // indirect
 	github.com/rosedblabs/wal v1.3.6 // indirect
+	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/tidwall/gjson v1.18.0 // indirect
 	github.com/tidwall/grect v0.1.4 // indirect

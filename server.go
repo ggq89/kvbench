@@ -126,6 +126,11 @@ func Start(opts Options) error {
 			path = "lotusdb.db"
 		}
 		store, err = NewLotusdbStore(path, fsync)
+	case "bitcask":
+		if path == "" {
+			path = "bitcask.db"
+		}
+		store, err = NewBitcaskStore(path, fsync)
 	}
 
 	if err != nil {

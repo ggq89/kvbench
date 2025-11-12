@@ -553,6 +553,11 @@ func getStore(s string, fsync bool, path string) (kvbench.Store, string, error) 
 			path = "lotusdb.db"
 		}
 		store, err = kvbench.NewLotusdbStore(path, fsync)
+	case "bitcask":
+		if path == "" {
+			path = "bitcask.db"
+		}
+		store, err = kvbench.NewBitcaskStore(path, fsync)
 	}
 
 	return store, path, err

@@ -53,7 +53,9 @@ func (s *lotusdbStore) PGet(keys [][]byte) ([][]byte, []bool, error) {
 	var oks = make([]bool, len(keys))
 	var err error
 
-	batch := s.db.NewBatch(lotusdb.DefaultBatchOptions)
+	opt := lotusdb.DefaultBatchOptions
+	opt.ReadOnly = true
+	batch := s.db.NewBatch(opt)
 	for i, k := range keys {
 		vals[i], err = batch.Get(k)
 		oks[i] = (err == nil)

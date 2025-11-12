@@ -31,7 +31,8 @@ Features:
   - [sniper](https://github.com/recoilme/sniper)
   - btree (in-memory) with [AOF persistence](https://redis.io/topics/persistence)
   - map (in-memory) with [AOF persistence](https://redis.io/topics/persistence)
-  - [lotusdb](github.com/lotusdblabs/lotusdb)
+  - [lotusdb](https://github.com/lotusdblabs/lotusdb)
+  - [bitcask](https://git.mills.io/prologic/bitcask)
 - Option to disable fsync
 - Compatible with Redis clients
 
