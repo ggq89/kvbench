@@ -1,0 +1,177 @@
+duration=10s, c=14 size=256 store=badger
+2025/11/12 19:17:33 main.go:61: [0;37m[info] path=badger.db[0m
+badger/nofsync batch write test inserted: 4000000 entries; took: 6.118010167s s , mean: 6.118010
+badger/nofsync Alloc = 1870 MiB	TotalAlloc = 12900 MiB	Sys = 2533 MiB	HeapAlloc = 1870 MiB	HeapObjects = 2222886	HeapInuse = 1877 MiB	NumGC = 23
+badger/nofsync disk usage: 3335 MiB
+badger/nofsync keys rate: 373883 op/s, mean: 191 ns, took: 10 s
+badger/nofsync set rate: 260851 op/s, mean: 273 ns, took: 10 s
+badger/nofsync get rate: 778606 op/s, mean: 91 ns, took: 10 s
+badger/nofsync setmixed rate: 8221 op/s, mean: 121630 ns, took: 10 s
+badger/nofsync getmixed rate: 704142 op/s, mean: 101 ns, took: 10 s
+badger/nofsync del rate: 291006 op/s, mean: 245 ns, took: 10 s
+duration=10s, c=14 size=256 store=bbolt
+2025/11/12 19:18:30 main.go:61: [0;37m[info] path=bbolt.db[0m
+bbolt/nofsync batch write test inserted: 4000000 entries; took: 1m48.238747666s s , mean: 108.238748
+bbolt/nofsync Alloc = 39 MiB	TotalAlloc = 53939 MiB	Sys = 82 MiB	HeapAlloc = 39 MiB	HeapObjects = 23808	HeapInuse = 41 MiB	NumGC = 2263
+bbolt/nofsync disk usage: 1572 MiB
+bbolt/nofsync keys rate: 642533 op/s, mean: 111 ns, took: 10 s
+bbolt/nofsync set rate: 31814 op/s, mean: 2245 ns, took: 10 s
+bbolt/nofsync get rate: 778625 op/s, mean: 91 ns, took: 10 s
+bbolt/nofsync setmixed rate: 12299 op/s, mean: 81304 ns, took: 10 s
+bbolt/nofsync getmixed rate: 563267 op/s, mean: 126 ns, took: 10 s
+bbolt/nofsync del rate: 108132 op/s, mean: 660 ns, took: 10 s
+duration=10s, c=14 size=256 store=bolt
+2025/11/12 19:23:22 main.go:61: [0;37m[info] path=bolt.db[0m
+bolt/nofsync batch write test inserted: 4000000 entries; took: 1m44.270314584s s , mean: 104.270315
+bolt/nofsync Alloc = 37 MiB	TotalAlloc = 53542 MiB	Sys = 82 MiB	HeapAlloc = 37 MiB	HeapObjects = 18658	HeapInuse = 38 MiB	NumGC = 2393
+bolt/nofsync disk usage: 1581 MiB
+bolt/nofsync keys rate: 704869 op/s, mean: 101 ns, took: 10 s
+bolt/nofsync set rate: 31513 op/s, mean: 2266 ns, took: 10 s
+bolt/nofsync get rate: 903939 op/s, mean: 79 ns, took: 10 s
+bolt/nofsync setmixed rate: 10138 op/s, mean: 98638 ns, took: 10 s
+bolt/nofsync getmixed rate: 632362 op/s, mean: 112 ns, took: 10 s
+bolt/nofsync del rate: 33263 op/s, mean: 2147 ns, took: 10 s
+duration=10s, c=14 size=256 store=buntdb
+2025/11/12 19:25:56 main.go:61: [0;37m[info] path=buntdb.db[0m
+buntdb/nofsync batch write test inserted: 4000000 entries; took: 8.141513083s s , mean: 8.141513
+buntdb/nofsync Alloc = 1484 MiB	TotalAlloc = 3735 MiB	Sys = 1870 MiB	HeapAlloc = 1484 MiB	HeapObjects = 12772644	HeapInuse = 1498 MiB	NumGC = 24
+buntdb/nofsync disk usage: 1260 MiB
+buntdb/nofsync keys rate: 989 op/s, mean: 72157 ns, took: 10 s
+buntdb/nofsync set rate: 107842 op/s, mean: 662 ns, took: 10 s
+buntdb/nofsync get rate: 6517283 op/s, mean: 10 ns, took: 10 s
+buntdb/nofsync setmixed rate: 22772 op/s, mean: 43912 ns, took: 10 s
+buntdb/nofsync getmixed rate: 350649 op/s, mean: 203 ns, took: 10 s
+buntdb/nofsync del rate: 1175236 op/s, mean: 60 ns, took: 10 s
+duration=10s, c=14 size=256 store=leveldb
+2025/11/12 19:26:55 main.go:61: [0;37m[info] path=leveldb.db[0m
+leveldb/nofsync batch write test inserted: 4000000 entries; took: 18.074049208s s , mean: 18.074049
+leveldb/nofsync Alloc = 19 MiB	TotalAlloc = 4965 MiB	Sys = 33 MiB	HeapAlloc = 19 MiB	HeapObjects = 24513	HeapInuse = 20 MiB	NumGC = 494
+leveldb/nofsync disk usage: 1064 MiB
+leveldb/nofsync keys rate: 139123 op/s, mean: 513 ns, took: 10 s
+leveldb/nofsync set rate: 165550 op/s, mean: 431 ns, took: 10 s
+leveldb/nofsync get rate: 801371 op/s, mean: 89 ns, took: 10 s
+leveldb/nofsync setmixed rate: 39425 op/s, mean: 25364 ns, took: 9 s
+leveldb/nofsync getmixed rate: 526989 op/s, mean: 135 ns, took: 9 s
+leveldb/nofsync del rate: 516589 op/s, mean: 138 ns, took: 10 s
+duration=10s, c=14 size=256 store=rocksdb
+2025/11/12 19:28:03 main.go:61: [0;37m[info] path=rocksdb.db[0m
+rocksdb/nofsync batch write test inserted: 4000000 entries; took: 4.756900583s s , mean: 4.756901
+rocksdb/nofsync Alloc = 0 MiB	TotalAlloc = 1491 MiB	Sys = 11 MiB	HeapAlloc = 0 MiB	HeapObjects = 4707	HeapInuse = 1 MiB	NumGC = 501
+rocksdb/nofsync disk usage: 1309 MiB
+rocksdb/nofsync keys rate: 366805 op/s, mean: 194 ns, took: 10 s
+rocksdb/nofsync set rate: 194705 op/s, mean: 366 ns, took: 10 s
+rocksdb/nofsync get rate: 424482 op/s, mean: 168 ns, took: 10 s
+rocksdb/nofsync setmixed rate: 93561 op/s, mean: 10688 ns, took: 10 s
+rocksdb/nofsync getmixed rate: 256414 op/s, mean: 278 ns, took: 10 s
+rocksdb/nofsync del rate: 205428 op/s, mean: 347 ns, took: 10 s
+duration=10s, c=14 size=256 store=pebble
+2025/11/12 19:28:58 Found 0 WALs
+2025/11/12 19:28:58 main.go:61: [0;37m[info] path=pebble.db[0m
+pebble/nofsync batch write test inserted: 4000000 entries; took: 46.161981125s s , mean: 46.161981
+pebble/nofsync Alloc = 3 MiB	TotalAlloc = 5850 MiB	Sys = 25 MiB	HeapAlloc = 3 MiB	HeapObjects = 8948	HeapInuse = 5 MiB	NumGC = 2719
+pebble/nofsync disk usage: 1060 MiB
+pebble/nofsync keys rate: 94758 op/s, mean: 753 ns, took: 10 s
+pebble/nofsync set rate: 143077 op/s, mean: 499 ns, took: 10 s
+pebble/nofsync get rate: 126942 op/s, mean: 562 ns, took: 10 s
+pebble/nofsync setmixed rate: 104595 op/s, mean: 9560 ns, took: 10 s
+pebble/nofsync getmixed rate: 36713 op/s, mean: 1945 ns, took: 10 s
+pebble/nofsync del rate: 497503 op/s, mean: 143 ns, took: 10 s
+duration=10s, c=14 size=256 store=pogreb
+2025/11/12 19:30:35 main.go:61: [0;37m[info] path=pogreb.db[0m
+pogreb/nofsync batch write test inserted: 4000000 entries; took: 29.329341291s s , mean: 29.329341
+pogreb/nofsync Alloc = 2 MiB	TotalAlloc = 7772 MiB	Sys = 16 MiB	HeapAlloc = 2 MiB	HeapObjects = 9474	HeapInuse = 3 MiB	NumGC = 3016
+pogreb/nofsync disk usage: 1154 MiB
+pogreb/nofsync keys rate: -1 op/s, mean: -1 ns, took: -1 s
+pogreb/nofsync set rate: 122380 op/s, mean: 583 ns, took: 10 s
+pogreb/nofsync get rate: 5858526 op/s, mean: 12 ns, took: 10 s
+pogreb/nofsync setmixed rate: 58014 op/s, mean: 17237 ns, took: 10 s
+pogreb/nofsync getmixed rate: 836904 op/s, mean: 85 ns, took: 10 s
+pogreb/nofsync del rate: 2361001 op/s, mean: 30 ns, took: 10 s
+duration=10s, c=14 size=256 store=nutsdb
+2025/11/12 19:31:45 main.go:61: [0;37m[info] path=nutsdb.db[0m
+nutsdb/nofsync batch write test inserted: 4000000 entries; took: 7.538512625s s , mean: 7.538513
+nutsdb/nofsync Alloc = 1788 MiB	TotalAlloc = 4485 MiB	Sys = 2269 MiB	HeapAlloc = 1788 MiB	HeapObjects = 17362063	HeapInuse = 1808 MiB	NumGC = 21
+nutsdb/nofsync disk usage: 1280 MiB
+nutsdb/nofsync keys rate: 2280523 op/s, mean: 31 ns, took: 10 s
+nutsdb/nofsync set rate: 270797 op/s, mean: 263 ns, took: 10 s
+nutsdb/nofsync get rate: 2499417 op/s, mean: 28 ns, took: 10 s
+nutsdb/nofsync setmixed rate: 56107 op/s, mean: 17823 ns, took: 10 s
+nutsdb/nofsync getmixed rate: 862956 op/s, mean: 82 ns, took: 10 s
+nutsdb/nofsync del rate: 1293521 op/s, mean: 55 ns, took: 10 s
+duration=10s, c=14 size=256 store=sniper
+2025/11/12 19:32:43 main.go:61: [0;37m[info] path=sniper.db[0m
+sniper/nofsync batch write test inserted: 4000000 entries; took: 9.06548575s s , mean: 9.065486
+sniper/nofsync Alloc = 233 MiB	TotalAlloc = 3852 MiB	Sys = 280 MiB	HeapAlloc = 233 MiB	HeapObjects = 527946	HeapInuse = 241 MiB	NumGC = 158
+sniper/nofsync disk usage: 1953 MiB
+sniper/nofsync keys rate: -1 op/s, mean: -1 ns, took: -1 s
+sniper/nofsync set rate: 544316 op/s, mean: 131 ns, took: 10 s
+sniper/nofsync get rate: 51672884 op/s, mean: 1 ns, took: 10 s
+sniper/nofsync setmixed rate: 192979 op/s, mean: 5181 ns, took: 10 s
+sniper/nofsync getmixed rate: 37113968 op/s, mean: 1 ns, took: 10 s
+sniper/nofsync del rate: 32968963 op/s, mean: 2 ns, took: 10 s
+duration=10s, c=14 size=256 store=btree
+2025/11/12 19:33:32 main.go:61: [0;37m[info] path=btree.db[0m
+btree/nofsync batch write test inserted: 4000000 entries; took: 6.793904625s s , mean: 6.793905
+btree/nofsync Alloc = 1579 MiB	TotalAlloc = 2896 MiB	Sys = 1637 MiB	HeapAlloc = 1579 MiB	HeapObjects = 13554172	HeapInuse = 1583 MiB	NumGC = 19
+btree/nofsync disk usage: 1113 MiB
+btree/nofsync keys rate: 2490422 op/s, mean: 28 ns, took: 10 s
+btree/nofsync set rate: 353988 op/s, mean: 201 ns, took: 10 s
+btree/nofsync get rate: 5771065 op/s, mean: 12 ns, took: 10 s
+btree/nofsync setmixed rate: 71163 op/s, mean: 14052 ns, took: 10 s
+btree/nofsync getmixed rate: 1110697 op/s, mean: 64 ns, took: 10 s
+btree/nofsync del rate: 2194178 op/s, mean: 32 ns, took: 10 s
+duration=10s, c=14 size=256 store=btree/memory
+52515:M 12 Nov 19:34:29.764 * persistance disabled
+2025/11/12 19:34:29 main.go:61: [0;37m[info] path=:memory:[0m
+btree/memory/nofsync batch write test inserted: 4000000 entries; took: 6.430312708s s , mean: 6.430313
+btree/memory/nofsync Alloc = 1363 MiB	TotalAlloc = 2895 MiB	Sys = 1825 MiB	HeapAlloc = 1363 MiB	HeapObjects = 12435940	HeapInuse = 1395 MiB	NumGC = 19
+btree/memory/nofsync keys rate: 2497127 op/s, mean: 28 ns, took: 10 s
+btree/memory/nofsync set rate: 1478243 op/s, mean: 48 ns, took: 10 s
+btree/memory/nofsync get rate: 6240280 op/s, mean: 11 ns, took: 10 s
+btree/memory/nofsync setmixed rate: 80139 op/s, mean: 12478 ns, took: 10 s
+btree/memory/nofsync getmixed rate: 1430160 op/s, mean: 49 ns, took: 10 s
+btree/memory/nofsync del rate: 1208952 op/s, mean: 59 ns, took: 10 s
+duration=10s, c=14 size=256 store=map
+2025/11/12 19:35:26 main.go:61: [0;37m[info] path=map.db[0m
+map/nofsync batch write test inserted: 4000000 entries; took: 2.808772208s s , mean: 2.808772
+map/nofsync Alloc = 1858 MiB	TotalAlloc = 3297 MiB	Sys = 1907 MiB	HeapAlloc = 1858 MiB	HeapObjects = 9359622	HeapInuse = 1859 MiB	NumGC = 20
+map/nofsync disk usage: 1113 MiB
+map/nofsync keys rate: 4081720 op/s, mean: 17 ns, took: 10 s
+map/nofsync set rate: 431388 op/s, mean: 165 ns, took: 10 s
+map/nofsync get rate: 6086506 op/s, mean: 11 ns, took: 10 s
+map/nofsync setmixed rate: 110670 op/s, mean: 9035 ns, took: 10 s
+map/nofsync getmixed rate: 2339050 op/s, mean: 30 ns, took: 10 s
+map/nofsync del rate: 2841354 op/s, mean: 25 ns, took: 10 s
+duration=10s, c=14 size=256 store=map/memory
+52680:M 12 Nov 19:36:19.199 * persistance disabled
+2025/11/12 19:36:19 main.go:61: [0;37m[info] path=:memory:[0m
+map/memory/nofsync batch write test inserted: 4000000 entries; took: 2.561818292s s , mean: 2.561818
+map/memory/nofsync Alloc = 1754 MiB	TotalAlloc = 3296 MiB	Sys = 1799 MiB	HeapAlloc = 1754 MiB	HeapObjects = 8951974	HeapInuse = 1755 MiB	NumGC = 19
+map/memory/nofsync keys rate: 4070366 op/s, mean: 17 ns, took: 10 s
+map/memory/nofsync set rate: 2114611 op/s, mean: 33 ns, took: 10 s
+map/memory/nofsync get rate: 7337892 op/s, mean: 9 ns, took: 10 s
+map/memory/nofsync setmixed rate: 144777 op/s, mean: 6907 ns, took: 10 s
+map/memory/nofsync getmixed rate: 3585491 op/s, mean: 19 ns, took: 10 s
+map/memory/nofsync del rate: 2316429 op/s, mean: 30 ns, took: 10 s
+duration=10s, c=14 size=256 store=bitcask
+2025/11/12 19:37:11 main.go:61: [0;37m[info] path=bitcask.db[0m
+bitcask/nofsync batch write test inserted: 4000000 entries; took: 24.249993375s s , mean: 24.249993
+bitcask/nofsync Alloc = 2254 MiB	TotalAlloc = 42650 MiB	Sys = 3193 MiB	HeapAlloc = 2254 MiB	HeapObjects = 24491688	HeapInuse = 2314 MiB	NumGC = 169
+bitcask/nofsync disk usage: 1071 MiB
+bitcask/nofsync keys rate: 638231 op/s, mean: 111 ns, took: 10 s
+bitcask/nofsync set rate: 73913 op/s, mean: 966 ns, took: 10 s
+bitcask/nofsync get rate: 1036781 op/s, mean: 68 ns, took: 10 s
+bitcask/nofsync setmixed rate: 29959 op/s, mean: 33378 ns, took: 10 s
+bitcask/nofsync getmixed rate: 500502 op/s, mean: 142 ns, took: 10 s
+bitcask/nofsync del rate: 316459 op/s, mean: 225 ns, took: 10 s
+duration=10s, c=14 size=256 store=rosedb
+2025/11/12 19:39:01 main.go:61: [0;37m[info] path=rosedb.db[0m
+rosedb/nofsync batch write test inserted: 4000000 entries; took: 29.192605667s s , mean: 29.192606
+rosedb/nofsync Alloc = 712 MiB	TotalAlloc = 9913 MiB	Sys = 743 MiB	HeapAlloc = 712 MiB	HeapObjects = 12972499	HeapInuse = 718 MiB	NumGC = 153
+rosedb/nofsync disk usage: 1091 MiB
+rosedb/nofsync keys rate: 5 op/s, mean: 11956052 ns, took: 11 s
+rosedb/nofsync set rate: 299429 op/s, mean: 238 ns, took: 10 s
+rosedb/nofsync get rate: 5617256 op/s, mean: 12 ns, took: 10 s
+rosedb/nofsync setmixed rate: 63427 op/s, mean: 15766 ns, took: 10 s
+rosedb/nofsync getmixed rate: 967331 op/s, mean: 73 ns, took: 10 s
+rosedb/nofsync del rate: 301889 op/s, mean: 236 ns, took: 10 s
