@@ -13,6 +13,7 @@ require (
 	github.com/lotusdblabs/lotusdb/v2 v2.1.0
 	github.com/nutsdb/nutsdb v1.0.4
 	github.com/recoilme/sniper v0.4.1
+	github.com/rosedblabs/rosedb/v2 v2.4.0
 	github.com/smallnest/log v0.0.0-20190128090703-5dc5752d8772
 	github.com/syndtr/goleveldb v1.0.0
 	github.com/tidwall/btree v1.8.1
@@ -50,6 +51,7 @@ require (
 	github.com/gofrs/flock v0.8.1 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/snappy v1.0.0 // indirect
+	github.com/google/btree v1.1.2 // indirect
 	github.com/google/flatbuffers v25.2.10+incompatible // indirect
 	github.com/hashicorp/go-immutable-radix/v2 v2.0.0 // indirect
 	github.com/hashicorp/golang-lru/v2 v2.0.7 // indirect
@@ -68,9 +70,10 @@ require (
 	github.com/prometheus/procfs v0.19.2 // indirect
 	github.com/recoilme/sortedset v0.0.0-20200825100557-fdc6fff0bc87 // indirect
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
+	github.com/robfig/cron/v3 v3.0.0 // indirect
 	github.com/rogpeppe/go-internal v1.14.1 // indirect
 	github.com/rosedblabs/diskhash v0.0.0-20230910084041-289755737e2a // indirect
-	github.com/rosedblabs/wal v1.3.6 // indirect
+	github.com/rosedblabs/wal v1.3.8 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/spaolacci/murmur3 v1.1.0 // indirect
 	github.com/tidwall/gjson v1.18.0 // indirect

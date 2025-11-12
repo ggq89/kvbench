@@ -558,6 +558,11 @@ func getStore(s string, fsync bool, path string) (kvbench.Store, string, error) 
 			path = "bitcask.db"
 		}
 		store, err = kvbench.NewBitcaskStore(path, fsync)
+	case "rosedb":
+		if path == "" {
+			path = "rosedb.db"
+		}
+		store, err = kvbench.NewRosedbStore(path, fsync)
 	}
 
 	return store, path, err

@@ -131,6 +131,11 @@ func Start(opts Options) error {
 			path = "bitcask.db"
 		}
 		store, err = NewBitcaskStore(path, fsync)
+	case "rosedb":
+		if path == "" {
+			path = "rosedb.db"
+		}
+		store, err = NewRosedbStore(path, fsync)
 	}
 
 	if err != nil {
