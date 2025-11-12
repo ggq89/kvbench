@@ -119,8 +119,6 @@ github.com/kr/text v0.2.0 h1:5Nx0Ya0ZqY2ygV366QzturHI13Jq95ApcVaJBhpS+AY=
 github.com/kr/text v0.2.0/go.mod h1:eLer722TekiGuMkidMxC/pM04lWEeraHUUmBw8l2grE=
 github.com/linxGnu/grocksdb v1.10.3 h1:0laII9AQ6kFxo5SjhdTfSh9EgF20piD6TMHK6YuDm+4=
 github.com/linxGnu/grocksdb v1.10.3/go.mod h1:OLQKZwiKwaJiAVCsOzWKvwiLwfZ5Vz8Md5TYR7t7pM8=
-github.com/lotusdblabs/lotusdb/v2 v2.1.0 h1:rCBrwED8Po12FzrxxX4zppxoHb2O+sCtddyW4kyDiCQ=
-github.com/lotusdblabs/lotusdb/v2 v2.1.0/go.mod h1:MyOEvqL3Hxm3HiBOYZ4BlZBnqCIcc2QQkF34VBD76fk=
 github.com/mattetti/filebuffer v1.0.1 h1:gG7pyfnSIZCxdoKq+cPa8T0hhYtD9NxCdI4D7PTjRLM=
 github.com/mattetti/filebuffer v1.0.1/go.mod h1:YdMURNDOttIiruleeVr6f56OrMc+MydEnTcXwtkxNVs=
 github.com/minio/minlz v1.0.1-0.20250507153514-87eb42fe8882 h1:0lgqHvJWHLGW5TuObJrfyEi6+ASTKDBWikGvPqy9Yiw=
@@ -168,8 +166,6 @@ github.com/robfig/cron/v3 v3.0.0/go.mod h1:eQICP3HwyT7UooqI/z+Ov+PtYAWygg1TEWWzG
 github.com/rogpeppe/go-internal v1.9.0/go.mod h1:WtVeX8xhTBvf0smdhujwtBcq4Qrzq/fJaraNFVN+nFs=
 github.com/rogpeppe/go-internal v1.14.1 h1:UQB4HGPB6osV0SQTLymcB4TgvyWu6ZyliaW0tI/otEQ=
 github.com/rogpeppe/go-internal v1.14.1/go.mod h1:MaRKkUm5W0goXpeCfT7UZI6fk/L7L7so1lCWt35ZSgc=
-github.com/rosedblabs/diskhash v0.0.0-20230910084041-289755737e2a h1:BNp46nsknQivr3Gxzc6ytzG7xtBscBnLYZIkr0UfCko=
-github.com/rosedblabs/diskhash v0.0.0-20230910084041-289755737e2a/go.mod h1:3xvIg+7iOFUL/vMCE/6DwE6Yecb0okVYJBEfpdC/E+8=
 github.com/rosedblabs/rosedb/v2 v2.4.0 h1:gwI3zHm5tJlvCb6DMtHEhHsq/BiWS2vNS7Lg409ii6k=
 github.com/rosedblabs/rosedb/v2 v2.4.0/go.mod h1:yehP2SiNojwdleiYhvjQU9jWPuXhO7hbWBzohueVPVY=
 github.com/rosedblabs/wal v1.3.8 h1:tErpD9JT/ICiyV3mv5l7qUH6lybn5XF1TbI0e8kvH8M=

@@ -29,7 +29,6 @@ var stores = []struct {
 	{"btree/memory", ":memory:", NewBTreeStore},
 	{"map", "map.db", NewMapStore},
 	{"map/memory", ":memory:", NewMapStore},
-	{"lotusdb", "lotusdb.db", NewNutsdbStore},
 	{"bitcask", "bitcask.db", NewBitcaskStore},
 	{"rosedb", "rosedb.db", NewRosedbStore},
 }
