@@ -155,11 +155,12 @@ func (s *boltStore) Keys(pattern []byte, limit int, withvalues bool) ([][]byte, 
 }
 
 func (s *boltStore) FlushDB() error {
-	return s.db.Update(func(tx *bolt.Tx) error {
-		if err := tx.DeleteBucket(boltBucket); err != nil {
-			return err
-		}
-		_, err := tx.CreateBucket(boltBucket)
-		return err
-	})
+	return s.db.Sync()
+	// return s.db.Update(func(tx *bolt.Tx) error {
+	// 	if err := tx.DeleteBucket(boltBucket); err != nil {
+	// 		return err
+	// 	}
+	// 	_, err := tx.CreateBucket(boltBucket)
+	// 	return err
+	// })
 }

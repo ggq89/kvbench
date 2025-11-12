@@ -132,5 +132,5 @@ func (s *badgerStore) Keys(pattern []byte, limit int, withvals bool) ([][]byte, 
 }
 
 func (s *badgerStore) FlushDB() error {
-	return s.db.DropAll()
+	return s.db.Sync()
 }

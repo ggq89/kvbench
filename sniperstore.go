@@ -1,7 +1,6 @@
 package kvbench
 
 import (
-	"os"
 	"sync"
 
 	"github.com/recoilme/sniper"
@@ -87,6 +86,6 @@ func (s *sniperStore) Keys(pattern []byte, limit int, withvalues bool) ([][]byte
 
 func (s *sniperStore) FlushDB() error {
 	err := s.db.Close()
-	os.RemoveAll(s.path)
+	// os.RemoveAll(s.path)
 	return err
 }

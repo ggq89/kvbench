@@ -1,12 +1,11 @@
 package kvbench
 
 import (
-	"github.com/syndtr/goleveldb/leveldb/util"
-	"os"
 	"sync"
 
 	"github.com/syndtr/goleveldb/leveldb"
 	"github.com/syndtr/goleveldb/leveldb/opt"
+	"github.com/syndtr/goleveldb/leveldb/util"
 )
 
 type leveldbStore struct {
@@ -117,7 +116,7 @@ func (s *leveldbStore) FlushDB() error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.db.Close()
-	os.RemoveAll(s.path)
+	// os.RemoveAll(s.path)
 	s.db = nil
 	var opts *opt.Options
 	if !s.fsync {

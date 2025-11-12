@@ -119,7 +119,8 @@ func (s *buntdbStore) Keys(pattern []byte, limit int, withvals bool) ([][]byte, 
 }
 
 func (s *buntdbStore) FlushDB() error {
-	return s.db.Update(func(tx *buntdb.Tx) error {
-		return tx.DeleteAll()
-	})
+	return s.db.Close()
+	// return s.db.Update(func(tx *buntdb.Tx) error {
+	// 	return tx.DeleteAll()
+	// })
 }

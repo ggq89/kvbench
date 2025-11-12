@@ -1,7 +1,6 @@
 package kvbench
 
 import (
-	"os"
 	"sync"
 
 	"modernc.org/kv"
@@ -141,7 +140,7 @@ func (s *kvStore) FlushDB() error {
 	s.mu.Lock()
 	defer s.mu.Unlock()
 	s.db.Close()
-	os.RemoveAll(s.path)
+	// os.RemoveAll(s.path)
 	s.db = nil
 	db, err := kv.Create(s.path, &kv.Options{})
 	if err != nil {
