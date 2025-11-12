@@ -7,36 +7,15 @@ import (
 const nutsdbBucket = "keys"
 
 type nutsdbStore struct {
-	// mu sync.RWMutex
 	db *nutsdb.DB
 }
-
-const defaultSegmentSize int64 = 256 * nutsdb.MB
-
-// DefaultOptions represents the default options.
-var pptions = func() nutsdb.Options {
-	opt := nutsdb.DefaultOptions
-	opt.EntryIdxMode = nutsdb.HintKeyAndRAMIdxMode
-	opt.SegmentSize = defaultSegmentSize
-	opt.NodeNum = 1
-	opt.RWMode = nutsdb.FileIO
-	opt.SyncEnable = false
-	return opt
-}()
-
-// func nutsdbKey(key []byte) []byte {
-// 	r := make([]byte, len(key)+1)
-// 	r[0] = 'k'
-// 	copy(r[1:], key)
-// 	return r
-// }
 
 func NewNutsdbStore(path string, fsync bool) (Store, error) {
 	if path == ":memory:" {
 		return nil, ErrMemoryNotAllowed
 	}
 
-	opt := pptions
+	opt := nutsdb.DefaultOptions
 	opt.SyncEnable = fsync
 	opt.Dir = path
 
@@ -45,13 +24,13 @@ func NewNutsdbStore(path string, fsync bool) (Store, error) {
 		return nil, err
 	}
 
-	// err = db.Update(func(tx *nutsdb.Tx) error {
-	// 	// you should call Bucket with data structure and the name of bucket first
-	// 	return tx.NewKVBucket(nutsdbBucket)
-	// })
-	// if err != nil {
-	// 	return nil, err
-	// }
+	err = db.Update(func(tx *nutsdb.Tx) error {
+		// you should call Bucket with data structure and the name of bucket first
+		return tx.NewKVBucket(nutsdbBucket)
+	})
+	if err != nil {
+		return nil, err
+	}
 
 	return &nutsdbStore{
 		db: db,
@@ -83,7 +62,7 @@ func (s *nutsdbStore) PGet(keys [][]byte) ([][]byte, []bool, error) {
 		for i, k := range keys {
 			e, err := tx.Get(nutsdbBucket, k)
 			if e != nil {
-				vals[i] = e.Value
+				vals[i] = e
 			}
 
 			oks[i] = (err == nil)
@@ -112,7 +91,7 @@ func (s *nutsdbStore) Get(key []byte) ([]byte, bool, error) {
 	s.db.View(func(tx *nutsdb.Tx) error {
 		e, err := tx.Get(nutsdbBucket, key)
 		if e != nil {
-			v = e.Value
+			v = e
 		}
 		ok = err == nil
 		return err
@@ -132,34 +111,13 @@ func (s *nutsdbStore) Del(key []byte) (bool, error) {
 func (s *nutsdbStore) Keys(pattern []byte, limit int, withvals bool) ([][]byte, [][]byte, error) {
 	var keys [][]byte
 	var vals [][]byte
+	var err error
 
-	err := s.db.View(func(tx *nutsdb.Tx) error {
-		entries, err := tx.PrefixScan(nutsdbBucket, pattern, 0, nutsdb.ScanNoLimit)
+	err = s.db.View(func(tx *nutsdb.Tx) error {
+		keys, err = tx.GetKeys(nutsdbBucket)
 		if err != nil {
 			return err
 		}
-
-		for i, entry := range entries {
-			keys[i] = entry.Key
-			vals[i] = entry.Value
-		}
-
-		// iterator := nutsdb.NewIterator(tx, nutsdbBucket, nutsdb.IteratorOptions{Reverse: false})
-
-		// for iterator.Valid() {
-		// 	keys = append(keys, bcopy(iterator.Key()))
-		// 	if withvals {
-		// 		value, err := iterator.Value()
-		// 		if err != nil {
-		// 			return err
-		// 		}
-		// 		vals = append(vals, bcopy(value))
-		// 	}
-
-		// 	if !iterator.Next() {
-		// 		break
-		// 	}
-		// }
 
 		return nil
 	})

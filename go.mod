@@ -10,7 +10,7 @@ require (
 	github.com/cockroachdb/pebble/v2 v2.1.1
 	github.com/dgraph-io/badger/v4 v4.8.0
 	github.com/linxGnu/grocksdb v1.10.3
-	github.com/nutsdb/nutsdb v0.14.3
+	github.com/nutsdb/nutsdb v1.0.4
 	github.com/recoilme/sniper v0.4.1
 	github.com/smallnest/log v0.0.0-20190128090703-5dc5752d8772
 	github.com/syndtr/goleveldb v1.0.0
@@ -27,8 +27,8 @@ require (
 	github.com/DataDog/zstd v1.5.7 // indirect
 	github.com/RaduBerinde/axisds v0.0.0-20250419182453-5135a0650657 // indirect
 	github.com/RaduBerinde/btreemap v0.0.0-20250419174037-3d62b7205d54 // indirect
-	github.com/antlabs/stl v0.0.2 // indirect
-	github.com/antlabs/timer v0.1.4 // indirect
+	github.com/antlabs/stl v0.0.1 // indirect
+	github.com/antlabs/timer v0.0.11 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bwmarrin/snowflake v0.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
@@ -44,7 +44,7 @@ require (
 	github.com/getsentry/sentry-go v0.36.2 // indirect
 	github.com/go-logr/logr v1.4.3 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
-	github.com/gofrs/flock v0.13.0 // indirect
+	github.com/gofrs/flock v0.8.1 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/snappy v1.0.0 // indirect
 	github.com/google/flatbuffers v25.2.10+incompatible // indirect
