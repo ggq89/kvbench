@@ -19,7 +19,7 @@ Features:
 
 - Databases
   - [badger](https://github.com/dgraph-io/badger)
-  - [BboltDB](https://go.etcd.io/bbolt)
+  - [BboltDB](https://github.com/etcd-io/bbolt)
   - [BoltDB](https://github.com/boltdb/bolt)
   - [buntdb](https://github.com/tidwall/buntdb)
   - [LevelDB](https://github.com/syndtr/goleveldb)

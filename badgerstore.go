@@ -1,21 +1,11 @@
 package kvbench
 
 import (
-	"sync"
-
 	"github.com/dgraph-io/badger/v4"
 )
 
 type badgerStore struct {
-	mu sync.RWMutex
 	db *badger.DB
-}
-
-func badgerKey(key []byte) []byte {
-	r := make([]byte, len(key)+1)
-	r[0] = 'k'
-	copy(r[1:], key)
-	return r
 }
 
 func NewBadgerStore(path string, fsync bool) (Store, error) {
@@ -110,21 +100,23 @@ func (s *badgerStore) Keys(pattern []byte, limit int, withvals bool) ([][]byte, 
 	var vals [][]byte
 
 	err := s.db.View(func(txn *badger.Txn) error {
-		it := txn.NewIterator(badger.DefaultIteratorOptions)
+		opt := badger.DefaultIteratorOptions
+		opt.Prefix = pattern
+		it := txn.NewIterator(opt)
 		defer it.Close()
-		prefix := pattern
-		for it.Seek(prefix); it.ValidForPrefix(prefix); it.Next() {
+
+		for it.Rewind(); it.Valid(); it.Next() {
 			item := it.Item()
-			k := item.Key()
-			keys = append(keys, k)
+			keys = append(keys, item.Key())
 			if withvals {
-				v, err := item.ValueCopy(nil)
-				if err != nil {
-					continue
-				}
-				vals = append(vals, v)
+				item.Value(func(v []byte) error {
+					vals = append(vals, v)
+					return nil
+				})
 			}
+
 		}
+
 		return nil
 	})
 
