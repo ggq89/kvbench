@@ -10,7 +10,7 @@ fi
 `rm -f benchmarks/*.csv`
 
 # STORES=("badger" "bbolt" "bolt" "buntdb" "leveldb" "kv" "rocksdb" "pebble" "pogreb" "nutsdb" "sniper" "btree" "btree/memory" "map" "map/memory")
-STORES=("badger" "bbolt" "bolt" "buntdb" "leveldb" "rocksdb" "pebble" "pogreb" "nutsdb" "sniper" "btree" "btree/memory" "map" "map/memory" "bitcask" "rosedb" "lmdb")
+STORES=("badger" "bbolt" "bolt" "buntdb" "leveldb" "rocksdb" "pebble" "pogreb" "nutsdb" "sniper" "btree" "btree/memory" "map" "map/memory" "bitcask" "rosedb")
 
 echo "name,batch,set,get,set-mixed,get-mixed,del" >> benchmarks/nofsync_throughputs.csv
 echo "name,batch,set,get,set-mixed,get-mixed,del" >> benchmarks/nofsync_time.csv

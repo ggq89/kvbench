@@ -1,7 +1,5 @@
 bou.ke/monkey v1.0.2 h1:kWcnsrCNUatbxncxR/ThdYqbytgOIArtYWqcQLQzKLI=
 bou.ke/monkey v1.0.2/go.mod h1:OqickVX3tNx6t33n1xvtTtu85YN5s6cKwVug+oHMaIA=
-github.com/Data-Corruption/lmdb-go v1.2.0 h1:lfa9ialg2Qeqoo+uFcj4AtmgNGBfSrDuc3hkblOsBms=
-github.com/Data-Corruption/lmdb-go v1.2.0/go.mod h1:+SOKGRO4lG1s8YqV8YE7Ryq2LuWBbXECM4AXhKSROpM=
 github.com/DataDog/zstd v1.5.7 h1:ybO8RBeh29qrxIhCA9E8gKY6xfONU9T6G6aP9DTKfLE=
 github.com/DataDog/zstd v1.5.7/go.mod h1:g4AWEaM3yOg3HYfnJ3YIawPnVdXJh9QME85blwSAmyw=
 github.com/RaduBerinde/axisds v0.0.0-20250419182453-5135a0650657 h1:8XBWWQD+vFF+JqOsm16t0Kab1a7YWV8+GISVEP8AuZ8=

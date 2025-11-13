@@ -549,11 +549,6 @@ func getStore(s string, fsync bool, path string) (kvbench.Store, string, error) 
 			path = "rosedb.db"
 		}
 		store, err = kvbench.NewRosedbStore(path, fsync)
-	case "lmdb":
-		if path == "" {
-			path = "lmdb.db"
-		}
-		store, err = kvbench.NewLmdbStore(path, fsync)
 	}
 
 	return store, path, err
