@@ -2,13 +2,12 @@ package kvbench
 
 import (
 	"bytes"
-	"os"
 
 	"github.com/Data-Corruption/lmdb-go/lmdb"
 	"github.com/Data-Corruption/lmdb-go/lmdbscan"
 )
 
-const lmdbName = "keys"
+const lmdbBucket = "keys"
 
 type lmdbStore struct {
 	env *lmdb.Env
@@ -24,22 +23,8 @@ func NewLmdbStore(path string, fsync bool) (Store, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	if !fsync {
-		err = env.SetFlags(lmdb.NoSync)
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	err = env.SetMaxDBs(1 << 31)
-	if err != nil {
-		return nil, err
-	}
-
-	err = os.MkdirAll(path, 0770)
-	if err != nil {
-		return nil, err
+		env.SetFlags(lmdb.NoSync)
 	}
 
 	err = env.Open(path, 0, 0644)
@@ -49,7 +34,7 @@ func NewLmdbStore(path string, fsync bool) (Store, error) {
 
 	var dbi lmdb.DBI
 	err = env.Update(func(txn *lmdb.Txn) (err error) {
-		dbi, err = txn.OpenDBI(lmdbName, lmdb.Create)
+		dbi, err = txn.OpenDBI(lmdbBucket, lmdb.Create)
 		if err != nil {
 			return err
 		}
