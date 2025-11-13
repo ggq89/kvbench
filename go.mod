@@ -14,7 +14,7 @@ require (
 	github.com/recoilme/sniper v0.4.1
 	github.com/rosedblabs/rosedb/v2 v2.4.0
 	github.com/smallnest/log v0.0.0-20190128090703-5dc5752d8772
-	github.com/syndtr/goleveldb v1.0.0
+	github.com/syndtr/goleveldb v1.0.1-0.20210819022825-2ae1ddf74ef7
 	github.com/tidwall/btree v1.8.1
 	github.com/tidwall/buntdb v1.3.2
 	github.com/tidwall/match v1.2.0
@@ -60,8 +60,6 @@ require (
 	github.com/mattetti/filebuffer v1.0.1 // indirect
 	github.com/minio/minlz v1.0.1-0.20250507153514-87eb42fe8882 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
-	github.com/onsi/ginkgo v1.13.0 // indirect
-	github.com/onsi/gomega v1.10.1 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/prometheus/client_golang v1.23.2 // indirect
 	github.com/prometheus/client_model v0.6.2 // indirect

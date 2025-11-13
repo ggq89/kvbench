@@ -165,13 +165,13 @@ rosedb/nofsync setmixed rate: 60743 op/s, mean: 16462 ns, took: 10 s
 rosedb/nofsync getmixed rate: 922339 op/s, mean: 77 ns, took: 10 s
 rosedb/nofsync del rate: 299996 op/s, mean: 238 ns, took: 10 s
 duration=10s, c=14 size=256 store=leveldb
-2025/11/13 16:44:12 main.go:61: [0;37m[info] path=leveldb.db[0m
-leveldb/nofsync batch write test inserted: 4000000 entries; took: 17.949840417s s , mean: 17.949840
-leveldb/nofsync Alloc = 15 MiB	TotalAlloc = 5004 MiB	Sys = 33 MiB	HeapAlloc = 15 MiB	HeapObjects = 15443	HeapInuse = 17 MiB	NumGC = 498
-leveldb/nofsync disk usage: 1068 MiB
-leveldb/nofsync keys rate: 148753 op/s, mean: 480 ns, took: 10 s
-leveldb/nofsync set rate: 153399 op/s, mean: 465 ns, took: 10 s
-leveldb/nofsync get rate: 665573 op/s, mean: 107 ns, took: 10 s
-leveldb/nofsync setmixed rate: 67210 op/s, mean: 14878 ns, took: 10 s
-leveldb/nofsync getmixed rate: 171993 op/s, mean: 415 ns, took: 10 s
-leveldb/nofsync del rate: 500855 op/s, mean: 142 ns, took: 10 s
+2025/11/13 17:44:46 main.go:61: [0;37m[info] path=leveldb.db[0m
+leveldb/nofsync batch write test inserted: 4000000 entries; took: 17.342139417s s , mean: 17.342139
+leveldb/nofsync Alloc = 25 MiB	TotalAlloc = 5580 MiB	Sys = 49 MiB	HeapAlloc = 25 MiB	HeapObjects = 33928	HeapInuse = 27 MiB	NumGC = 442
+leveldb/nofsync disk usage: 1064 MiB
+leveldb/nofsync keys rate: 51204 op/s, mean: 1394 ns, took: 10 s
+leveldb/nofsync set rate: 158028 op/s, mean: 451 ns, took: 10 s
+leveldb/nofsync get rate: 518655 op/s, mean: 137 ns, took: 10 s
+leveldb/nofsync setmixed rate: 58945 op/s, mean: 16964 ns, took: 10 s
+leveldb/nofsync getmixed rate: 263608 op/s, mean: 270 ns, took: 10 s
+leveldb/nofsync del rate: 498366 op/s, mean: 143 ns, took: 10 s
