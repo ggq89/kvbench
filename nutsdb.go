@@ -43,13 +43,16 @@ func (s *nutsdbStore) Close() error {
 }
 
 func (s *nutsdbStore) PSet(keys, vals [][]byte) error {
-	return s.db.Update(func(tx *nutsdb.Tx) error {
-		for i, k := range keys {
-			tx.Put(nutsdbBucket, k, vals[i], nutsdb.Persistent)
-		}
+	wb, err := s.db.NewWriteBatch()
+	if err != nil {
+		return err
+	}
 
-		return nil
-	})
+	for i, k := range keys {
+		wb.Put(nutsdbBucket, k, vals[i], nutsdb.Persistent)
+	}
+
+	return wb.Flush()
 }
 
 func (s *nutsdbStore) PGet(keys [][]byte) ([][]byte, []bool, error) {

@@ -219,10 +219,7 @@ func testGet(record *Record, name string, store kvbench.Store) {
 				case <-ctx.Done():
 					break LOOP
 				default:
-					_, ok, _ := store.Get(genKey(i))
-					if !ok {
-						i = index
-					}
+					store.Get(genKey(i))
 					i += uint64(*c)
 					count++
 				}
@@ -271,10 +268,7 @@ func testKeys(record *Record, name string, store kvbench.Store) {
 				case <-ctx.Done():
 					break LOOP
 				default:
-					_, _, err := store.Keys(genKeyPrefix(i), 0, true)
-					if err != nil {
-						i = index
-					}
+					store.Keys(genKeyPrefix(i), -1, true)
 					i += uint64(*c)
 					count++
 				}
@@ -334,10 +328,7 @@ func testGetSet(record *Record, name string, store kvbench.Store) {
 				case <-ctx.Done():
 					break LOOP
 				default:
-					_, ok, _ := store.Get(genKey(i))
-					if !ok {
-						i = index
-					}
+					store.Get(genKey(i))
 					i += uint64(*c)
 					count++
 				}

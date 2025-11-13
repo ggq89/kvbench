@@ -98,7 +98,7 @@ func (s *kvStore) Del(key []byte) (bool, error) {
 }
 
 func (s *kvStore) Keys(pattern []byte, limit int, withvalues bool) ([][]byte, [][]byte, error) {
-	return nil, nil, nil
+	return nil, nil, ErrNotSupported
 	/*
 		s.mu.RLock()
 		defer s.mu.RUnlock()
