@@ -5,6 +5,7 @@ go 1.24.0
 toolchain go1.24.5
 
 require (
+	github.com/Data-Corruption/lmdb-go v1.2.0
 	github.com/akrylysov/pogreb v0.10.2
 	github.com/boltdb/bolt v1.3.1
 	github.com/cockroachdb/pebble/v2 v2.1.1

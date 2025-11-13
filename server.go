@@ -131,6 +131,11 @@ func Start(opts Options) error {
 			path = "rosedb.db"
 		}
 		store, err = NewRosedbStore(path, fsync)
+	case "lmdb":
+		if path == "" {
+			path = "lmdb.db"
+		}
+		store, err = NewLmdbStore(path, fsync)
 	}
 
 	if err != nil {

@@ -33,6 +33,7 @@ Features:
   - map (in-memory) with [AOF persistence](https://redis.io/topics/persistence)
   - [bitcask](https://git.mills.io/prologic/bitcask)
   - [rosedb](https://github.com/rosedblabs/rosedb)
+  - [lmdb](https://github.com/Data-Corruption/lmdb-go)
 - Option to disable fsync
 - Compatible with Redis clients
 
