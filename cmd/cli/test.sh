@@ -3,7 +3,7 @@
 SIZE=256
 
 # STORES=("badger" "bbolt" "bolt" "leveldb" "kv" "buntdb" "pebble" "pogreb" "nutsdb" "rocksdb" "btree" "btree/memory" "map" "map/memory")
-STORES=("badger" "bbolt" "buntdb" "leveldb" "rocksdb" "pebble" "nutsdb" "rosedb")
+STORES=("badger" "buntdb" "leveldb" "rocksdb" "pebble" "nutsdb" "rosedb")
 
 export LD_LIBRARY_PATH=/usr/local/lib
 
@@ -26,16 +26,16 @@ done
 `rm  -fr *.db`
 `rm  -fr pogreb.*`
 
-# echo ""
-# echo "=========== test fsync ==========="
+echo ""
+echo "=========== test fsync ==========="
 
-# for i in "${STORES[@]}"
-# do
-# #   ./main -d 1m -size ${SIZE} -s "$i" -fsync >> benchmarks/test.log 2>&1
-#   echo "$i"
-# 	./cli -d 10s -size ${SIZE} -s "$i" -save "benchmarks/fsync.csv" -fsync >> benchmarks/test.log 2>&1
-# done
+for i in "${STORES[@]}"
+do
+#   ./main -d 1m -size ${SIZE} -s "$i" -fsync >> benchmarks/test.log 2>&1
+  echo "$i"
+	./cli -d 10s -size ${SIZE} -s "$i" -save "benchmarks/fsync.csv" -fsync >> benchmarks/test.log 2>&1
+done
 
-# `rm  -fr .*db` 
-# `rm  -fr *.db`
-# `rm  -fr pogreb.*`
+`rm  -fr .*db` 
+`rm  -fr *.db`
+`rm  -fr pogreb.*`
