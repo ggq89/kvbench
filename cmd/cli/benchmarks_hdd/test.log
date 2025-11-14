@@ -1,0 +1,165 @@
+duration=10s, c=16 size=256 store=badger
+2025/11/14 09:36:57 main.go:61: [0;37m[info] path=badger.db[0m
+badger/nofsync batch write test inserted: 4000000 entries; took: 18.262266323s s , mean: 18.262267
+badger/nofsync Alloc = 2553 MiB	TotalAlloc = 8920 MiB	Sys = 3354 MiB	HeapAlloc = 2553 MiB	HeapObjects = 4650654	HeapInuse = 2562 MiB	NumGC = 17
+badger/nofsync disk usage: 3517 MiB
+badger/nofsync keys rate: 216528 op/s, mean: 288 ns, took: 10 s
+badger/nofsync set rate: 55553 op/s, mean: 1125 ns, took: 10 s
+badger/nofsync get rate: 461123 op/s, mean: 135 ns, took: 10 s
+badger/nofsync setmixed rate: 3487 op/s, mean: 286715 ns, took: 10 s
+badger/nofsync getmixed rate: 328002 op/s, mean: 190 ns, took: 10 s
+badger/nofsync del rate: 167583 op/s, mean: 372 ns, took: 10 s
+duration=10s, c=16 size=256 store=buntdb
+2025/11/14 09:38:06 main.go:61: [0;37m[info] path=buntdb.db[0m
+buntdb/nofsync batch write test inserted: 4000000 entries; took: 29.154232038s s , mean: 29.154232
+buntdb/nofsync Alloc = 1842 MiB	TotalAlloc = 3733 MiB	Sys = 1906 MiB	HeapAlloc = 1842 MiB	HeapObjects = 14017607	HeapInuse = 1847 MiB	NumGC = 23
+buntdb/nofsync disk usage: 1315 MiB
+buntdb/nofsync keys rate: 93 op/s, mean: 667257 ns, took: 21 s
+buntdb/nofsync set rate: 9477 op/s, mean: 6594 ns, took: 14 s
+buntdb/nofsync get rate: 2121713 op/s, mean: 29 ns, took: 15 s
+buntdb/nofsync setmixed rate: 3219 op/s, mean: 310581 ns, took: 14 s
+buntdb/nofsync getmixed rate: 54290 op/s, mean: 1151 ns, took: 14 s
+buntdb/nofsync del rate: 15382 op/s, mean: 4063 ns, took: 13 s
+duration=10s, c=16 size=256 store=leveldb
+2025/11/14 09:39:56 main.go:61: [0;37m[info] path=leveldb.db[0m
+leveldb/nofsync batch write test inserted: 4000000 entries; took: 22.81722752s s , mean: 22.817228
+leveldb/nofsync Alloc = 19 MiB	TotalAlloc = 5376 MiB	Sys = 46 MiB	HeapAlloc = 19 MiB	HeapObjects = 21499	HeapInuse = 22 MiB	NumGC = 441
+panic: runtime error: invalid memory address or nil pointer dereference
+[signal SIGSEGV: segmentation violation code=0x1 addr=0x18 pc=0xefde42]
+
+goroutine 1 [running]:
+main.GetDirSize.func1({0xc0017efbf0?, 0x15?}, {0x0, 0x0}, {0x1aaa160, 0xc0001de2a0})
+	/home/ec2-user/go-work/src/kvbench/cmd/cli/main.go:561 +0x22
+path/filepath.walk({0x191a8b8, 0xa}, {0x1ab5ff0, 0xc00188c1a0}, 0xc000c77d38)
+	/home/ec2-user/go/src/path/filepath/path.go:365 +0x1d5
+path/filepath.Walk({0x191a8b8, 0xa}, 0xc000c77d38)
+	/home/ec2-user/go/src/path/filepath/path.go:427 +0x66
+main.GetDirSize({0x191a8b8?, 0x0?})
+	/home/ec2-user/go-work/src/kvbench/cmd/cli/main.go:560 +0x3c
+main.showDiskUsage(0xc000c77e70, {0xc0002280d0, 0xf}, {0x191a8b8, 0xa})
+	/home/ec2-user/go-work/src/kvbench/cmd/cli/main.go:112 +0xa5
+main.main()
+	/home/ec2-user/go-work/src/kvbench/cmd/cli/main.go:80 +0x514
+duration=10s, c=16 size=256 store=rocksdb
+2025/11/14 09:40:19 main.go:61: [0;37m[info] path=rocksdb.db[0m
+rocksdb/nofsync batch write test inserted: 4000000 entries; took: 20.941878936s s , mean: 20.941879
+rocksdb/nofsync Alloc = 2 MiB	TotalAlloc = 1491 MiB	Sys = 13 MiB	HeapAlloc = 2 MiB	HeapObjects = 12942	HeapInuse = 3 MiB	NumGC = 548
+rocksdb/nofsync disk usage: 1395 MiB
+rocksdb/nofsync keys rate: 361867 op/s, mean: 172 ns, took: 10 s
+rocksdb/nofsync set rate: 451566 op/s, mean: 138 ns, took: 10 s
+rocksdb/nofsync get rate: 425115 op/s, mean: 147 ns, took: 10 s
+rocksdb/nofsync setmixed rate: 189337 op/s, mean: 5281 ns, took: 10 s
+rocksdb/nofsync getmixed rate: 510073 op/s, mean: 122 ns, took: 10 s
+rocksdb/nofsync del rate: 604746 op/s, mean: 103 ns, took: 10 s
+duration=10s, c=16 size=256 store=pebble
+2025/11/14 09:41:30 Found 0 WALs
+2025/11/14 09:41:30 main.go:61: [0;37m[info] path=pebble.db[0m
+pebble/nofsync batch write test inserted: 4000000 entries; took: 1m54.911865518s s , mean: 114.911866
+pebble/nofsync Alloc = 3 MiB	TotalAlloc = 5826 MiB	Sys = 19 MiB	HeapAlloc = 3 MiB	HeapObjects = 8812	HeapInuse = 5 MiB	NumGC = 2884
+pebble/nofsync disk usage: 1056 MiB
+pebble/nofsync keys rate: 28477 op/s, mean: 2194 ns, took: 10 s
+pebble/nofsync set rate: 57522 op/s, mean: 1086 ns, took: 10 s
+pebble/nofsync get rate: 62208 op/s, mean: 1004 ns, took: 10 s
+pebble/nofsync setmixed rate: 66382 op/s, mean: 15064 ns, took: 10 s
+pebble/nofsync getmixed rate: 22128 op/s, mean: 2824 ns, took: 10 s
+pebble/nofsync del rate: 306488 op/s, mean: 203 ns, took: 10 s
+duration=10s, c=16 size=256 store=nutsdb
+2025/11/14 09:44:15 main.go:61: [0;37m[info] path=nutsdb.db[0m
+nutsdb/nofsync batch write test inserted: 4000000 entries; took: 14.749024949s s , mean: 14.749025
+nutsdb/nofsync Alloc = 1806 MiB	TotalAlloc = 4489 MiB	Sys = 2250 MiB	HeapAlloc = 1806 MiB	HeapObjects = 17468910	HeapInuse = 1825 MiB	NumGC = 21
+nutsdb/nofsync disk usage: 1280 MiB
+nutsdb/nofsync keys rate: 1974305 op/s, mean: 31 ns, took: 10 s
+nutsdb/nofsync set rate: 216258 op/s, mean: 289 ns, took: 10 s
+nutsdb/nofsync get rate: 2277177 op/s, mean: 27 ns, took: 10 s
+nutsdb/nofsync setmixed rate: 28601 op/s, mean: 34963 ns, took: 10 s
+nutsdb/nofsync getmixed rate: 494001 op/s, mean: 126 ns, took: 10 s
+nutsdb/nofsync del rate: 663654 op/s, mean: 94 ns, took: 10 s
+duration=10s, c=16 size=256 store=rosedb
+2025/11/14 09:45:21 main.go:61: [0;37m[info] path=rosedb.db[0m
+rosedb/nofsync batch write test inserted: 4000000 entries; took: 1m40.803071811s s , mean: 100.803072
+rosedb/nofsync Alloc = 577 MiB	TotalAlloc = 9914 MiB	Sys = 748 MiB	HeapAlloc = 577 MiB	HeapObjects = 12648064	HeapInuse = 583 MiB	NumGC = 154
+rosedb/nofsync disk usage: 1091 MiB
+rosedb/nofsync keys rate: 2 op/s, mean: 21752137 ns, took: 13 s
+rosedb/nofsync set rate: 256597 op/s, mean: 243 ns, took: 10 s
+rosedb/nofsync get rate: 5633522 op/s, mean: 11 ns, took: 10 s
+rosedb/nofsync setmixed rate: 35546 op/s, mean: 28132 ns, took: 10 s
+rosedb/nofsync getmixed rate: 597575 op/s, mean: 104 ns, took: 10 s
+rosedb/nofsync del rate: 229871 op/s, mean: 271 ns, took: 10 s
+duration=10s, c=16 size=256 store=badger
+2025/11/14 09:47:59 main.go:61: [0;37m[info] path=badger.db[0m
+badger/fsync batch write test inserted: 4000000 entries; took: 2m6.803867055s s , mean: 126.803867
+badger/fsync Alloc = 1239 MiB	TotalAlloc = 16371 MiB	Sys = 1711 MiB	HeapAlloc = 1239 MiB	HeapObjects = 3058362	HeapInuse = 1243 MiB	NumGC = 48
+badger/fsync disk usage: 3268 MiB
+badger/fsync keys rate: 366358 op/s, mean: 170 ns, took: 10 s
+badger/fsync set rate: 164 op/s, mean: 380087 ns, took: 10 s
+badger/fsync get rate: 525609 op/s, mean: 118 ns, took: 10 s
+badger/fsync setmixed rate: 161 op/s, mean: 6181069 ns, took: 10 s
+badger/fsync getmixed rate: 2594 op/s, mean: 24086 ns, took: 10 s
+badger/fsync del rate: 186 op/s, mean: 335178 ns, took: 10 s
+duration=10s, c=16 size=256 store=buntdb
+2025/11/14 09:50:56 main.go:61: [0;37m[info] path=buntdb.db[0m
+buntdb/fsync batch write test inserted: 4000000 entries; took: 1m54.566409923s s , mean: 114.566410
+buntdb/fsync Alloc = 1686 MiB	TotalAlloc = 3738 MiB	Sys = 1747 MiB	HeapAlloc = 1686 MiB	HeapObjects = 13473753	HeapInuse = 1691 MiB	NumGC = 24
+buntdb/fsync disk usage: 1245 MiB
+buntdb/fsync keys rate: 191 op/s, mean: 326441 ns, took: 10 s
+buntdb/fsync set rate: 67 op/s, mean: 928647 ns, took: 10 s
+buntdb/fsync get rate: 1546001 op/s, mean: 40 ns, took: 13 s
+buntdb/fsync setmixed rate: 67 op/s, mean: 14867537 ns, took: 10 s
+buntdb/fsync getmixed rate: 1234 op/s, mean: 50626 ns, took: 10 s
+buntdb/fsync del rate: 283 op/s, mean: 220071 ns, took: 13 s
+duration=10s, c=16 size=256 store=leveldb
+2025/11/14 09:53:49 main.go:61: [0;37m[info] path=leveldb.db[0m
+leveldb/fsync batch write test inserted: 4000000 entries; took: 2m48.570305252s s , mean: 168.570305
+leveldb/fsync Alloc = 28 MiB	TotalAlloc = 6158 MiB	Sys = 58 MiB	HeapAlloc = 28 MiB	HeapObjects = 31800	HeapInuse = 30 MiB	NumGC = 443
+leveldb/fsync disk usage: 1064 MiB
+leveldb/fsync keys rate: 84187 op/s, mean: 742 ns, took: 10 s
+leveldb/fsync set rate: 495 op/s, mean: 126253 ns, took: 10 s
+leveldb/fsync get rate: 550285 op/s, mean: 113 ns, took: 10 s
+leveldb/fsync setmixed rate: 58 op/s, mean: 17006922 ns, took: 10 s
+leveldb/fsync getmixed rate: 638576 op/s, mean: 97 ns, took: 10 s
+leveldb/fsync del rate: 528 op/s, mean: 118286 ns, took: 10 s
+duration=10s, c=16 size=256 store=rocksdb
+2025/11/14 09:57:28 main.go:61: [0;37m[info] path=rocksdb.db[0m
+rocksdb/fsync batch write test inserted: 4000000 entries; took: 1m42.585889632s s , mean: 102.585890
+rocksdb/fsync Alloc = 2 MiB	TotalAlloc = 1491 MiB	Sys = 13 MiB	HeapAlloc = 2 MiB	HeapObjects = 14998	HeapInuse = 3 MiB	NumGC = 527
+rocksdb/fsync disk usage: 1135 MiB
+rocksdb/fsync keys rate: 560581 op/s, mean: 111 ns, took: 10 s
+rocksdb/fsync set rate: 605 op/s, mean: 103288 ns, took: 10 s
+rocksdb/fsync get rate: 1208712 op/s, mean: 51 ns, took: 10 s
+rocksdb/fsync setmixed rate: 63 op/s, mean: 15865849 ns, took: 10 s
+rocksdb/fsync getmixed rate: 1237278 op/s, mean: 50 ns, took: 10 s
+rocksdb/fsync del rate: 558 op/s, mean: 111880 ns, took: 10 s
+duration=10s, c=16 size=256 store=pebble
+2025/11/14 10:00:01 Found 0 WALs
+2025/11/14 10:00:01 main.go:61: [0;37m[info] path=pebble.db[0m
+pebble/fsync batch write test inserted: 4000000 entries; took: 2m10.876131858s s , mean: 130.876132
+pebble/fsync Alloc = 4 MiB	TotalAlloc = 5916 MiB	Sys = 18 MiB	HeapAlloc = 4 MiB	HeapObjects = 9891	HeapInuse = 6 MiB	NumGC = 2326
+pebble/fsync disk usage: 1070 MiB
+pebble/fsync keys rate: 36774 op/s, mean: 1699 ns, took: 10 s
+pebble/fsync set rate: 1346 op/s, mean: 46425 ns, took: 10 s
+pebble/fsync get rate: 60791 op/s, mean: 1028 ns, took: 10 s
+pebble/fsync setmixed rate: 64 op/s, mean: 15384989 ns, took: 10 s
+pebble/fsync getmixed rate: 62486 op/s, mean: 1000 ns, took: 10 s
+pebble/fsync del rate: 1102 op/s, mean: 56701 ns, took: 10 s
+duration=10s, c=16 size=256 store=nutsdb
+2025/11/14 10:03:02 main.go:61: [0;37m[info] path=nutsdb.db[0m
+nutsdb/fsync batch write test inserted: 4000000 entries; took: 1m40.013206327s s , mean: 100.013206
+nutsdb/fsync Alloc = 1863 MiB	TotalAlloc = 4489 MiB	Sys = 2198 MiB	HeapAlloc = 1863 MiB	HeapObjects = 17785520	HeapInuse = 1880 MiB	NumGC = 21
+nutsdb/fsync disk usage: 1280 MiB
+nutsdb/fsync keys rate: 2232890 op/s, mean: 27 ns, took: 10 s
+nutsdb/fsync set rate: 61 op/s, mean: 1012889 ns, took: 10 s
+nutsdb/fsync get rate: 2272410 op/s, mean: 27 ns, took: 10 s
+nutsdb/fsync setmixed rate: 61 op/s, mean: 16193106 ns, took: 10 s
+nutsdb/fsync getmixed rate: 1011 op/s, mean: 61816 ns, took: 10 s
+nutsdb/fsync del rate: 913059 op/s, mean: 68 ns, took: 10 s
+duration=10s, c=16 size=256 store=rosedb
+2025/11/14 10:05:33 main.go:61: [0;37m[info] path=rosedb.db[0m
+rosedb/fsync batch write test inserted: 4000000 entries; took: 21.434967785s s , mean: 21.434968
+rosedb/fsync Alloc = 569 MiB	TotalAlloc = 9916 MiB	Sys = 732 MiB	HeapAlloc = 569 MiB	HeapObjects = 12631499	HeapInuse = 575 MiB	NumGC = 158
+rosedb/fsync disk usage: 1091 MiB
+rosedb/fsync keys rate: 2 op/s, mean: 21570567 ns, took: 13 s
+rosedb/fsync set rate: 263716 op/s, mean: 236 ns, took: 10 s
+rosedb/fsync get rate: 6223656 op/s, mean: 10 ns, took: 10 s
+rosedb/fsync setmixed rate: 34872 op/s, mean: 28675 ns, took: 10 s
+rosedb/fsync getmixed rate: 592251 op/s, mean: 105 ns, took: 10 s
+rosedb/fsync del rate: 231545 op/s, mean: 269 ns, took: 10 s
