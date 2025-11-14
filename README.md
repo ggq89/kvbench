@@ -99,7 +99,6 @@ Computer configuration: Apple M4 Pro, 14（10性能和4能效）, 48 GB RAM, 500
 | pebble  | 42  | 4    | 6    | 1062 | 103175  | 138720 | 105370  | 99093 | 37688  | 479873  |
 | bbolt   | 105 | 55   | 56   | 1571 | 646685  | 31412  | 790603  | 12358 | 572332 | 116347  |
 
-
 **Index ranking**
 
 The higher the ranking, the better
@@ -115,9 +114,35 @@ The higher the ranking, the better
 | 7    | pebble     | buntdb   | bbolt     | buntdb | buntdb  | rocksdb | bbolt   | leveldb | rocksdb |
 | 8    | bbolt      | nutsdb   | badger    | rosedb | bbolt   | pebble  | badger  | pebble  | bbolt   |
 
-* pogreb and sniper does not support prefix queries
-
 #### fsync
+
+**throughputs**
+
+| name          | batch write cost(s) | MemUsage(MiB) | HeapInuse(MiB) | DiskUsage(MiB) | Keys op/s | Set op/s | Get op/s | Setmixed op/s | Getmixed op/s | Del op/s |
+|---------------|---------------------|---------------|----------------|----------------|-----------|----------|----------|---------------|---------------|----------|
+| badger/fsync  | 7                   | 2676          | 2685           | 3335           | 371585    | 11658    | 646320   | 7060          | 99329         | 12106    |
+| rosedb/fsync  | 8                   | 511           | 517            | 1091           | 5         | 304254   | 6216259  | 60339         | 934129        | 292187   |
+| rocksdb/fsync | 25                  | 2             | 3              | 1128           | 430599    | 2062     | 505786   | 253           | 507425        | 1894     |
+| buntdb/fsync  | 28                  | 1513          | 1524           | 1253           | 963       | 198      | 5884299  | 208           | 2925          | 1442189  |
+| nutsdb/fsync  | 31                  | 2315          | 2333           | 1280           | 2270775   | 264      | 2754703  | 246           | 3472          | 1476340  |
+| pebble/fsync  | 60                  | 4             | 6              | 1071           | 93222     | 1859     | 112586   | 272           | 116383        | 2105     |
+| leveldb/fsync | 63                  | 13            | 15             | 1062           | 42753     | 2144     | 666115   | 291           | 569511        | 2231     |
+| bbolt/fsync   | 211                 | 37            | 38             | 1588           | 640713    | 130      | 774600   | 130           | 458999        | 129      |
+
+**Index ranking**
+
+The higher the ranking, the better
+
+| Rank | BatchWrite | MemUsage | DiskUsage | Prefix | Set | Get | Setmixed | Getmixed | Delete |
+|:----:|:-----------|:---------|:----------|:-------|:---|:---|:--------|:--------|:------|
+| 1    | badger     | rocksdb  | leveldb   | nutsdb | rosedb  | rosedb  | rosedb  | rosedb  | nutsdb  |
+| 2    | rosedb     | pebble   | pebble    | bbolt  | badger  | buntdb  | badger  | leveldb | buntdb  |
+| 3    | rocksdb    | leveldb  | rosedb    | rocksdb| leveldb | nutsdb  | leveldb | rocksdb | rosedb  |
+| 4    | buntdb     | bbolt    | rocksdb   | badger | rocksdb | bbolt   | pebble  | bbolt   | badger  |
+| 5    | nutsdb     | rosedb   | buntdb    | pebble | pebble  | leveldb | rocksdb | pebble  | leveldb  |
+| 6    | pebble     | buntdb   | nutsdb    | leveldb| nutsdb  | badger  | nutsdb  | badger  | pebble  |
+| 7    | leveldb    | nutsdb   | bbolt     | buntdb | buntdb  | rocksdb | buntdb  | nutsdb  | rocksdb  |
+| 8    | bbolt      | badger   | badger    | rosedb | bbolt   | pebble  | bbolt   | buntdb  | bbolt  |
 
 Coming soon...
 
