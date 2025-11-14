@@ -1,5 +1,7 @@
 # KVBench
 
+---
+
 Cloned from [liulhdarks/go-kvbench](https://github.com/liulhdarks/go-kvbench). Compared to the [smallnest/kvbench](https://github.com/smallnest/kvbench) codebase:
 1. Fixed some incorrect logic of KV database prefix query.
 2. Fixed an issue where some KV database configurations were incorrect and persistence was not enabled
@@ -36,6 +38,8 @@ Features:
 - Option to disable fsync
 - Compatible with Redis clients
 
+---
+
 ## Quickstart
 
 Run the following commands:
@@ -69,35 +73,31 @@ Example:
 ./cli -d 10s -size 256 -s "bbolt" -save "benchmarks/nofsync.csv" >> benchmarks/test.log 2>&1
 ```
 
-## SSD benchmark
-The following benchmarks show the throughput of inserting/reading keys (of size
-9 bytes) and values (of size 256 bytes). Batch write cost is the time it takes to write 4,000,000 keys and values.
+---
+
+## benchmark
+
+* The following benchmarks show the throughput of inserting/reading keys (of size 9 bytes) and values (of size 256 bytes). 
+* Batch write cost is the time it takes to write 4,000,000 keys and values.
+
+### SSD
 
 Computer configuration: Apple M4 Pro, 14（10性能和4能效）, 48 GB RAM, 500GB SSD
 
-### nofsync
+#### nofsync
 
 **throughputs**
 
 | name | batch write cost(s) | MemUsage(MiB) | HeapInuse(MiB) | DiskUsage(MiB) | Prefix op/s | Set op/s | Get op/s | Setmixed op/s | Getmixed op/s | Del op/s |
 |------|---------------------|---------------|----------------|----------------|-----------|----------|----------|---------------|---------------|----------|
-| map          | 2   | 1672 | 1673 | 1113 | 71      | 402469  | 5996264  | 84967   | 1573401  | 2884469  |
-| map/memory   | 2   | 1928 | 1929 | 75   | 2057561 | 7177591 | 102080   | 2002329 | 2270046  |          |
-| badger       | 6   | 909  | 912  | 3335 | 401682  | 284798  | 740151   | 9442    | 654084   | 310713   |
-| rocksdb      | 6   | 3    | 4    | 1291 | 361015  | 199367  | 299135   | 90945   | 241338   | 203154   |
-| btree        | 6   | 1532 | 1536 | 1113 | 1751    | 382492  | 6233683  | 65373   | 1021511  | 2003842  |
-| btree/memory | 6   | 1451 | 1463 | 1576 | 1413167 | 6210927 | 63676    | 1079349 | 1193747  |          |
-| buntdb       | 7   | 1680 | 1685 | 1279 | 804     | 116168  | 6017012  | 22275   | 344268   | 1199046  |
-| nutsdb       | 7   | 1848 | 1865 | 1280 | 2281420 | 265854  | 2456997  | 53381   | 812805   | 1234043  |
-| sniper       | 8   | 149  | 159  | 1953 | -1      | 550118  | 35392977 | 267492  | 29127345 | 31385085 |
-| leveldb      | 17 | 25 | 27 | 1064 | 51204 | 158028 | 518655 | 58945 | 263608 | 498366 |
-| bitcask      | 23  | 2981 | 3014 | 1071 | 624214  | 75022   | 1020881  | 30134   | 519674   | 307039   |
-| rosedb       | 28  | 602  | 608  | 1091 | 6       | 294411  | 5630722  | 60743   | 922339   | 299996   |
-| pogreb       | 30  | 2    | 3    | 1154 | -1      | 127821  | 6019969  | 60578   | 875630   | 2456936  |
-| pebble       | 41  | 3    | 5    | 1055 | 103501  | 141950  | 94970    | 99085   | 34565    | 463641   |
-| bbolt        | 104 | 38   | 40   | 1574 | 653242  | 30107   | 783146   | 12522   | 570597   | 113127   |
-| bolt         | 107 | 35   | 36   | 1582 | 774438  | 30352   | 1010986  | 9791    | 644485   | 30554    |
-
+| badger  | 6   | 1303 | 1309 | 3654 | 373046  | 275498 | 731472  | 9791  | 653621 | 301646  |
+| rocksdb | 6   | 3    | 4    | 1310 | 390185  | 197135 | 294849  | 91438 | 234092 | 207075  |
+| buntdb  | 8   | 1743 | 1748 | 1269 | 1053    | 115869 | 6036609 | 19891 | 305514 | 1202369 |
+| nutsdb  | 8   | 2009 | 2025 | 1280 | 2273910 | 270784 | 2724855 | 51480 | 784030 | 1384351 |
+| leveldb | 18  | 21   | 23   | 1061 | 52545   | 156204 | 488964  | 94729 | 158719 | 513809  |
+| rosedb  | 25  | 689  | 695  | 1091 | 5       | 260050 | 5659095 | 58831 | 906305 | 306553  |
+| pebble  | 42  | 4    | 6    | 1062 | 103175  | 138720 | 105370  | 99093 | 37688  | 479873  |
+| bbolt   | 105 | 55   | 56   | 1571 | 646685  | 31412  | 790603  | 12358 | 572332 | 116347  |
 
 
 **Index ranking**
@@ -106,19 +106,26 @@ The higher the ranking, the better
 
 | Rank | BatchWrite | MemUsage | DiskUsage | Prefix | Set | Get | Setmixed | Getmixed | Delete |
 |:----:|:-----------|:---------|:----------|:-------|:---|:---|:--------|:--------|:------|
-| 1    | rocksdb    | rocksdb  | pebble    | nutsdb  | sniper  | sniper  | sniper  | sniper  | sniper |
-| 2    | badger     | pogreb   | leveldb   | bolt    | rosedb  | pogreb  | pebble  | rosedb  | pogreb |
-| 3    | nutsdb     | pebble   | bitcask   | bbolt   | badger  | buntdb  | rocksdb | pogreb  | nutsdb |
-| 4    | buntdb     | leveldb  | rosedb    | bitcask | nutsdb  | rosedb  | leveldb | nutsdb  | buntdb |
-| 5    | sniper     | bolt     | pogreb    | badger  | rocksdb | nutsdb  | rosedb  | badger  | leveldb |
-| 6    | leveldb    | bbolt    | buntdb    | rocksdb | leveldb | bitcask | pogreb  | bolt    | pebble |
-| 7    | bitcask    | sniper   | nutsdb    | leveldb | pebble  | bolt    | nutsdb  | bbolt   | badger  |
-| 8    | rosedb     | rosedb   | rocksdb   | pebble  | pogreb  | bbolt   | bitcask | bitcask | bitcask  |
+| 1    | badger     | rocksdb  | leveldb   | nutsdb | badger  | buntdb  | pebble  | rosedb  | nutsdb  |
+| 2    | rocksdb    | pebble   | pebble    | bbolt  | nutsdb  | rosedb  | leveldb | nutsdb  | buntdb  |
+| 3    | buntdb     | leveldb  | rosedb    | rocksdb| rosedb  | nutsdb  | rocksdb | badger  | leveldb |
+| 4    | nutsdb     | bbolt    | buntdb    | badger | rocksdb | bbolt   | rosedb  | bbolt   | pebble  |
+| 5    | leveldb    | rosedb   | nutsdb    | pebble | leveldb | badger  | nutsdb  | buntdb  | rosedb  |
+| 6    | rosedb     | badger   | rocksdb   | leveldb| pebble  | leveldb | buntdb  | rocksdb | badger  |
+| 7    | pebble     | buntdb   | bbolt     | buntdb | buntdb  | rocksdb | bbolt   | leveldb | rocksdb |
+| 8    | bbolt      | nutsdb   | badger    | rosedb | bbolt   | pebble  | badger  | pebble  | bbolt   |
 
 * pogreb and sniper does not support prefix queries
 
-### fsync
+#### fsync
 
-**throughputs**
+Coming soon...
+
+
+---
+
+### HDD
+
+Computer configuration: 
 
 Coming soon...

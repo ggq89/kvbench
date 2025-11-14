@@ -41,7 +41,8 @@ func (s *kvStore) PSet(keys, values [][]byte) error {
 	if err := s.db.BeginTransaction(); err != nil {
 		return err
 	}
-	defer s.db.Rollback()
+
+	// defer s.db.Rollback()
 	for i := range keys {
 		if err := s.db.Set(keys[i], values[i]); err != nil {
 			return err
