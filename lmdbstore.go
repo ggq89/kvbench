@@ -2,6 +2,7 @@ package kvbench
 
 import (
 	"bytes"
+	"math"
 	"os"
 
 	"github.com/Data-Corruption/lmdb-go/lmdb"
@@ -20,6 +21,11 @@ func NewLmdbStore(path string, fsync bool) (Store, error) {
 		return nil, ErrMemoryNotAllowed
 	}
 
+	err := os.MkdirAll(path, 0770)
+	if err != nil {
+		return nil, err
+	}
+
 	env, err := lmdb.NewEnv()
 	if err != nil {
 		return nil, err
@@ -32,12 +38,17 @@ func NewLmdbStore(path string, fsync bool) (Store, error) {
 		}
 	}
 
-	err = env.SetMaxDBs(1 << 31)
+	err = env.SetMaxReaders(math.MaxInt64)
 	if err != nil {
 		return nil, err
 	}
 
-	err = os.MkdirAll(path, 0770)
+	err = env.SetMaxDBs(1 << 9)
+	if err != nil {
+		return nil, err
+	}
+
+	err = env.SetMapSize(1 << 31)
 	if err != nil {
 		return nil, err
 	}
